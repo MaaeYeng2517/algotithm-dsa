@@ -4,16 +4,17 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { CHAPTERS } from '../lib/chapters-meta';
 
-const SLIDE_RATIO = 9 / 16;
+const SLIDE_RATIO = 16 / 9;
 
-export default function Presentation() {
+export default function Presentation({ chapterId }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [timer, setTimer] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [startTime, setStartTime] = useState(null);
   const [pausedTime, setPausedTime] = useState(0);
 
-  const totalSlides = CHAPTERS.length;
+  const slides = chapterId ? CHAPTERS.filter(ch => ch.id === chapterId) : CHAPTERS;
+  const totalSlides = slides.length;
 
   // Timer logic
   useEffect(() => {
@@ -81,13 +82,13 @@ export default function Presentation() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide, togglePlay, resetTimer]);
 
-  const chapter = CHAPTERS[currentSlide];
+  const chapter = slides[currentSlide];
   const shortTitle = chapter.title.split(' ').slice(1).join(' ');
   const progress = ((currentSlide + 1) / totalSlides) * 100;
 
   return (
     <div className="presentation-app">
-      {/* Presentation container - 9:16 ratio */}
+      {/* Presentation container - 16:9 horizontal landscape */}
       <div className="presentation-stage">
         <div className="slide" style={{ aspectRatio: SLIDE_RATIO }}>
           {/* Slide content */}
@@ -232,7 +233,7 @@ export default function Presentation() {
               value={currentSlide + 1}
               onChange={(e) => goToSlide(parseInt(e.target.value) - 1)}
             >
-              {CHAPTERS.map((ch, i) => (
+              {slides.map((ch, i) => (
                 <option key={ch.id} value={i + 1}>
                   {i + 1}. {ch.title.split(' ').slice(1).join(' ')}
                 </option>

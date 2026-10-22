@@ -683,7 +683,7 @@ body {
   }
 }
 
-/* ===== PRESENTATION MODE (9:16) ===== */
+/* ===== PRESENTATION MODE (16:9 horizontal landscape) ===== */
 .presentation-app {
   display: flex;
   flex-direction: column;
