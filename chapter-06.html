@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>บทที่ 6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</title>
+  <meta name="description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta name="author" content="MaeeYeng">
+  <meta name="keywords" content="โครงสร้างข้อมูล, อัลกอริทึม, DSA, Data Structures, Algorithms, Big O, Sorting, Searching, Graph, Tree, Hash Table, Dynamic Programming, Greedy, Divide and Conquer, C, Python, Java">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://maaeyeng2517.github.io/algotithm-dsa/chapter-06.html">
+  <link rel="stylesheet" href="style.css">
+  <!-- Open Graph -->
+  <meta property="og:title" content="บทที่ 6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maaeyeng2517.github.io/algotithm-dsa/chapter-06.html">
+  
+  <meta property="og:site_name" content="DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:locale" content="th_TH">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="บทที่ 6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta name="twitter:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'base', securityLevel: 'loose' });</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">DSA</div>
+        <span>DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</span>
+      </a>
+      <button class="mobile-menu-btn" aria-label="เปิดเมนูนำทาง" aria-expanded="false" onclick="toggleMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="chapter-01.html">1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+        <li><a href="chapter-02.html">2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+        <li><a href="chapter-03.html">3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+        <li><a href="chapter-04.html">4 สแตกและคิว (Stack and Queue)</a></li>
+        <li><a href="chapter-05.html">5 ลิงก์ลิสต์ (Linked List)</a></li>
+        <li><a href="chapter-06.html" class="active">6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+        <li><a href="chapter-07.html">7 ตารางแฮช (Hash Table)</a></li>
+        <li><a href="chapter-08.html">8 กราฟ (Graph)</a></li>
+        <li><a href="chapter-09.html">9 การเรียงลำดับ (Sorting)</a></li>
+        <li><a href="chapter-10.html">10 การค้นหา (Searching)</a></li>
+        <li><a href="chapter-11.html">11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+        <li><a href="chapter-12.html">12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+        <li><a href="chapter-13.html">13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+        <li><a href="chapter-14.html">14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+        <li><a href="chapter-15.html">15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+
+  <nav class="breadcrumb">
+    <a href="index.html">หน้าแรก</a>
+    <span>›</span>
+    <span>บทที่ 6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</span>
+  </nav>
+
+  <div class="content-grid">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h3>สารบัญบทเรียน<span class="badge">15 บท</span></h3>
+        <ul class="chapter-list">
+    <li><a href="chapter-01.html"><span class="chapter-number">01</span>1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+    <li><a href="chapter-02.html"><span class="chapter-number">02</span>2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+    <li><a href="chapter-03.html"><span class="chapter-number">03</span>3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+    <li><a href="chapter-04.html"><span class="chapter-number">04</span>4 สแตกและคิว (Stack and Queue)</a></li>
+    <li><a href="chapter-05.html"><span class="chapter-number">05</span>5 ลิงก์ลิสต์ (Linked List)</a></li>
+    <li><a href="chapter-06.html" class="active"><span class="chapter-number">06</span>6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+    <li><a href="chapter-07.html"><span class="chapter-number">07</span>7 ตารางแฮช (Hash Table)</a></li>
+    <li><a href="chapter-08.html"><span class="chapter-number">08</span>8 กราฟ (Graph)</a></li>
+    <li><a href="chapter-09.html"><span class="chapter-number">09</span>9 การเรียงลำดับ (Sorting)</a></li>
+    <li><a href="chapter-10.html"><span class="chapter-number">10</span>10 การค้นหา (Searching)</a></li>
+    <li><a href="chapter-11.html"><span class="chapter-number">11</span>11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+    <li><a href="chapter-12.html"><span class="chapter-number">12</span>12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+    <li><a href="chapter-13.html"><span class="chapter-number">13</span>13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+    <li><a href="chapter-14.html"><span class="chapter-number">14</span>14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+    <li><a href="chapter-15.html"><span class="chapter-number">15</span>15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content-area" id="main-content">
+      <article>
+        <div class="article-meta">
+          <span class="meta-item"><strong>บทเรียน:</strong> บทที่ 6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</span>
+          <span class="meta-item"><strong>หมวด:</strong> โครงสร้างข้อมูลและอัลกอริทึม</span>
+          <span class="meta-item"><strong>ภาษา:</strong> ไทย / English</span>
+        </div>
+        <h1>บทที่ 6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</h1>
+        
+<h2 id="วตถประสงคการเรยนร">วัตถุประสงค์การเรียนรู้</h2>
+<p>เมื่อเรียนจบบทนี้ นักศึกษาจะสามารถ</p>
+<ol>
+<li>อธิบายคำศัพท์พื้นฐานของต้นไม้ (ราก โหนด ขอบ เส้นทาง ระดับ ความสูง)</li>
+<li>อธิบายไบนารีทรีและไบนารีเซิร์ชทรี (BST)</li>
+<li>อธิบายการดำเนินการกับ BST (แทรก ลบ ค้นหา ทบทวนทุกแบบ)</li>
+<li>เปรียบเทียบการทบทวนต้นไม้แบบก่อนกลางหลัง (Pre-order, In-order, Post-order)</li>
+<li>เขียนโปรแกรมจัดการไบนารีเซิร์ชทรีได้อย่างถูกต้อง</li>
+</ol>
+
+<h2 id="การประเมน">การประเมิน</h2>
+<table>
+<tr><th>รายการ</th><th>น้ำหนัก</th><th>หมายเหตุ</th></tr>
+<tr><td>งานเขียนโปรแกรมจัดการไบนารีเซิร์ชทรี</td><td>20%</td><td>โค้ดภาษา C/Python/Java</td></tr>
+<tr><td>แบบทดสอบท้ายบท</td><td>10%</td><td>ข้อควบคุมเลือกตอบและปฏิบัติการ</td></tr>
+<tr><td>การปฏิบัติงานในห้องปฏิบัติการคอมพิวเตอร์</td><td>10%</td><td>ฝึกสร้างและทบทวนต้นไม้</td></tr>
+</table>
+
+<hr>
+
+<h2 id="61-คำศพทพนฐานของตนไม">6.1 คำศัพท์พื้นฐานของต้นไม้</h2>
+
+<pre><code class=" language-mermaid">graph TD
+    subgraph Tree[ต้นไม้]
+        A[(ราก Root)] --&gt; B[(โหนด)]
+        A --&gt; C[(โหนด)]
+        B --&gt; D[(ใบ Leaf)]
+        B --&gt; E[(ใบ Leaf)]
+        C --&gt; F[(ใบ Leaf)]
+    end
+    
+    style A fill:#90EE90
+    style D fill:#FFB6C1
+    style E fill:#FFB6C1
+    style F fill:#FFB6C1</code></pre>
+
+<table>
+<tr><th>คำศัพท์</th><th>ความหมาย</th></tr>
+<tr><td><strong>ราก (Root)</strong></td><td>โหนดบนสุดของต้นไม้ ไม่มีโหนดพ่อ</td></tr>
+<tr><td><strong>โหนด (Node)</strong></td><td>หน่วยย่อยของต้นไม้ เก็บข้อมูลและตัวชี้ไปยังลูก</td></tr>
+<tr><td><strong>ขอบ (Edge)</strong></td><td>เส้นเชื่อมระหว่างโหนดสองตัว</td></tr>
+<tr><td><strong>โหนดลูก (Child)</strong></td><td>โหนดที่อยู่ใต้โหนดพ่อ</td></tr>
+<tr><td><strong>โหนดพ่อ (Parent)</strong></td><td>โหนดที่อยู่เหนือโหนดลูก</td></tr>
+<tr><td><strong>พี่น้อง (Sibling)</strong></td><td>โหนดที่มีโหนดพ่อเดียวกัน</td></tr>
+<tr><td><strong>ใบ (Leaf)</strong></td><td>โหนดที่ไม่มีโหนดลูก</td></tr>
+<tr><td><strong>เส้นทาง (Path)</strong></td><td>ลำดับของขอบจากโหนดหนึ่งไปยังอีกโหนดหนึ่ง</td></tr>
+<tr><td><strong>ระดับ (Level)</strong></td><td>ระยะห่างจากราก รากอยู่ระดับ 0</td></tr>
+<tr><td><strong>ความสูง (Height)</strong></td><td>ระดับสูงสุดของต้นไม้ (ระยะจากรากถึงใบที่ลึกที่สุด)</td></tr>
+<tr><td><strong>ต้นย่อย (Subtree)</strong></td><td>ต้นไม้ที่เกิดจากโหนดใดโหนดหนึ่งลงมา</td></tr>
+</table>
+
+<h3 id="ตวอยางตนไม">ตัวอย่างต้นไม้</h3>
+
+<pre><code class="">        ราก (A)
+       /      \
+      B        C
+     / \      /
+    D   E    F</code></pre>
+
+<ul>
+<li>ราก: A</li>
+<li>ใบ: D, E, F</li>
+<li>โหนดพ่อของ D และ E คือ B</li>
+<li>ระดับของ A คือ 0, B และ C คือ 1, D E F คือ 2</li>
+<li>ความสูงของต้นไม้คือ 2</li>
+</ul>
+
+<hr>
+
+<h2 id="62-ไบนารทร-binary-tree">6.2 ไบนารีทรี (Binary Tree)</h2>
+
+<p>ไบนารีทรีคือต้นไม้ที่แต่ละโหนดมีลูกสูงสุดสองตัว (ลูกซ้ายและลูกขวา)</p>
+
+<pre><code class=" language-mermaid">graph TD
+    A[(1)] --&gt; B[(2)]
+    A --&gt; C[(3)]
+    B --&gt; D[(4)]
+    B --&gt; E[(5)]
+    C --&gt; F[(6)]
+    C --&gt; G[(7)]</code></pre>
+
+<hr>
+
+<h2 id="63-ไบนารเซรชทร-bst">6.3 ไบนารีเซิร์ชทรี (BST)</h2>
+
+<p>ไบนารีเซิร์ชทรีคือไบนารีทรีที่มีคุณสมบัติพิเศษ:</p>
+<ul>
+<li>ค่าในทุกโหนดของต้นย่อยซ้าย ต้องน้อยกว่าค่าของโหนดปัจจุบัน</li>
+<li>ค่าในทุกโหนดของต้นย่อยขวา ต้องมากกว่าค่าของโหนดปัจจุบัน</li>
+<li>ไม่มีค่าซ้ำกัน</li>
+</ul>
+
+<pre><code class=" language-mermaid">graph TD
+    A[(50)] --&gt; B[(30)]
+    A --&gt; C[(70)]
+    B --&gt; D[(20)]
+    B --&gt; E[(40)]
+    C --&gt; F[(60)]
+    C --&gt; G[(80)]</code></pre>
+
+<h3 id="การสราง-bst-จากคา-50-30-70-20-40-60-80">การสร้าง BST จากค่า: 50, 30, 70, 20, 40, 60, 80</h3>
+
+<p>ขั้นตอนการแทรก:</p>
+<ol>
+<li>50 → เป็นราก</li>
+<li>30 → น้อยกว่า 50 ไปซ้ายของ 50</li>
+<li>70 → มากกว่า 50 ไปขวาของ 50</li>
+<li>20 → น้อยกว่า 50 ไปซ้าย, น้อยกว่า 30 ไปซ้ายของ 30</li>
+<li>40 → น้อยกว่า 50 ไปซ้าย, มากกว่า 30 ไปขวาของ 30</li>
+<li>60 → มากกว่า 50 ไปขวา, น้อยกว่า 70 ไปซ้ายของ 70</li>
+<li>80 → มากกว่า 50 ไปขวา, มากกว่า 70 ไปขวาของ 70</li>
+</ol>
+
+<p>ผลลัพธ์ (ตามภาพด้านบน)</p>
+
+<hr>
+
+<h2 id="64-การดำเนนการกบ-bst">6.4 การดำเนินการกับ BST</h2>
+
+<h3 id="การคนหา-search">การค้นหา (Search)</h3>
+<p>เปรียบเทียบค่าที่ต้องการกับโหนดปัจจุบัน ถ้าน้อยกว่าไปซ้าย มากกว่าไปขวา เท่ากันพบแล้ว</p>
+
+<pre><code class=" language-python">def search(root, key):
+    if root is None or root.data == key:
+        return root
+    if key &lt; root.data:
+        return search(root.left, key)
+    return search(root.right, key)</code></pre>
+<p>ความซับซ้อน: O(h) โดย h คือความสูงของต้นไม้ (กรณีแย่ที่สุด O(n) ถ้าต้นไม้เกลี่ยเป็นเส้นตรง)</p>
+
+<h3 id="การแทรก-insert">การแทรก (Insert)</h3>
+<p>ค้นหาตำแหน่งที่เหมาะสมเหมือนการค้นหา แล้วแทรกเป็นใบใหม่</p>
+
+<pre><code class=" language-python">def insert(root, key):
+    if root is None:
+        return Node(key)
+    if key &lt; root.data:
+        root.left = insert(root.left, key)
+    else:
+        root.right = insert(root.right, key)
+    return root</code></pre>
+
+<h3 id="การลบ-delete">การลบ (Delete)</h3>
+<p>มีสามกรณี:</p>
+<ol>
+<li>โหนดที่ลบเป็นใบ → ลบทิ้งเลย</li>
+<li>โหนดที่ลบมีลูกหนึ่งตัว → เชื่อมลูกนั้นแทนที่โหนดที่ลบ</li>
+<li>โหนดที่ลบมีลูกสองตัว → หาค่าตัวสืบตำแหน่ง (in-order successor) คือค่าน้อยที่สุดในต้นย่อยขวา แล้วแทนที่</li>
+</ol>
+
+<pre><code class=" language-python">def delete_node(root, key):
+    if root is None:
+        return root
+    
+    if key &lt; root.data:
+        root.left = delete_node(root.left, key)
+    elif key &gt; root.data:
+        root.right = delete_node(root.right, key)
+    else:
+        # กรณีโหนดมีลูกไม่เกินหนึ่งตัว
+        if root.left is None:
+            return root.right
+        elif root.right is None:
+            return root.left
+        
+        # กรณีมีลูกสองตัว หาค่าน้อยที่สุดในต้นย่อยขวา
+        temp = min_value_node(root.right)
+        root.data = temp.data
+        root.right = delete_node(root.right, temp.data)
+    
+    return root</code></pre>
+
+<hr>
+
+<h2 id="65-การทบทวนตนไม-tree-traversal">6.5 การทบทวนต้นไม้ (Tree Traversal)</h2>
+
+<p>มีสี่แบบหลัก:</p>
+
+<h3 id="1-pre-order-กอน-กลาง-หลง">1. Pre-order (ก่อน-กลาง-หลัง)</h3>
+<p>เยี่ยมราก → ต้นย่อยซ้าย → ต้นย่อยขวา</p>
+
+<h3 id="2-in-order-กลาง">2. In-order (กลาง)</h3>
+<p>ต้นย่อยซ้าย → ราก → ต้นย่อยขวา (สำหรับ BST จะได้ค่าเรียงจากน้อยไปมาก)</p>
+
+<h3 id="3-post-order-หลง">3. Post-order (หลัง)</h3>
+<p>ต้นย่อยซ้าย → ต้นย่อยขวา → ราก</p>
+
+<h3 id="4-level-order-ระดบ">4. Level-order (ระดับ)</h3>
+<p>เยี่ยมทีละระดับจากบนลงล่าง ซ้ายไปขวา (ใช้คิว)</p>
+
+<pre><code class=" language-mermaid">graph TD
+    A[(50)] --&gt; B[(30)]
+    A --&gt; C[(70)]
+    B --&gt; D[(20)]
+    B --&gt; E[(40)]
+    C --&gt; F[(60)]
+    C --&gt; G[(80)]
+    
+    Pre[Pre-order: 50 30 20 40 70 60 80]
+    In[In-order: 20 30 40 50 60 70 80]
+    Post[Post-order: 20 40 30 60 80 70 50]</code></pre>
+
+<h3 id="ตวอยางโคดการทบทวน-ภาษา-python">ตัวอย่างโค้ดการทบทวน (ภาษา Python)</h3>
+<pre><code class=" language-python">class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+def pre_order(root):
+    if root:
+        print(root.data, end=&quot; &quot;)
+        pre_order(root.left)
+        pre_order(root.right)
+
+def in_order(root):
+    if root:
+        in_order(root.left)
+        print(root.data, end=&quot; &quot;)
+        in_order(root.right)
+
+def post_order(root):
+    if root:
+        post_order(root.left)
+        post_order(root.right)
+        print(root.data, end=&quot; &quot;)</code></pre>
+
+<h3 id="ตวอยางผลลพธจากตนไมดานบน">ตัวอย่างผลลัพธ์จากต้นไม้ด้านบน</h3>
+
+<table>
+<tr><th>แบบ</th><th>ผลลัพธ์</th></tr>
+<tr><td>Pre-order</td><td>50 30 20 40 70 60 80</td></tr>
+<tr><td>In-order</td><td>20 30 40 50 60 70 80 (เรียงลำดับ!)</td></tr>
+<tr><td>Post-order</td><td>20 40 30 60 80 70 50</td></tr>
+<tr><td>Level-order</td><td>50 30 70 20 40 60 80</td></tr>
+</table>
+
+<hr>
+
+<h2 id="66-ตนไมทสมบรณและตนไมทสมดล">6.6 ต้นไม้ที่สมบูรณ์และต้นไม้ที่สมดุล</h2>
+
+<ul>
+<li><strong>ต้นไม้สมบูรณ์ (Full Binary Tree):</strong> ทุกโหนดมีลูก 0 หรือ 2 ตัว</li>
+<li><strong>ต้นไม้ที่สมดุล (Balanced Tree):</strong> ความสูงของต้นย่อยซ้ายและขวาแตกต่างกันไม่เกิน 1 ทุกโหนด</li>
+<li><strong>ต้นไม้ที่สมบูรณ์แบบ (Perfect Binary Tree):</strong> ทุกระดับเต็มทุกโหนด</li>
+</ul>
+
+<hr>
+
+<h2 id="67-การประยกตใช">6.7 การประยุกต์ใช้</h2>
+
+<ul>
+<li>โครงสร้างไดเรกทอรีและไฟล์ในระบบปฏิบัติการ</li>
+<li>แสดงข้อมูลเชิงลำดับชั้น (องค์กร ครอบครัว)</li>
+<li>ต้นไม้คำตัดขาดสิน (Decision Tree)</li>
+<li>การแสดงนิพจน์คณิตศาสตร์ (Expression Tree)</li>
+</ul>
+
+<hr>
+
+<h2 id="แบบฝกหด">แบบฝึกหัด</h2>
+
+<h3 id="ขอท-1">ข้อที่ 1</h3>
+<p>จงวาดไบนารีเซิร์ชทรีจากการแทรกค่า 50, 30, 70, 20, 40, 60, 80 ทีละตัว</p>
+
+<p><strong>คำตอบ:</strong> ดูภาพประกอบในหัวข้อ 6.3</p>
+
+<h3 id="ขอท-2">ข้อที่ 2</h3>
+<p>จงเขียนอัลกอริทึมค้นหาค่าในไบนารีเซิร์ชทรี</p>
+
+<p><strong>คำตอบ:</strong> ดูโค้ดในหัวข้อ 6.4 ฟังก์ชัน <code>search</code></p>
+
+<h3 id="ขอท-3">ข้อที่ 3</h3>
+<p>จงเปรียบเทียบผลลัพธ์การทบทวนต้นไม้แบบก่อนกลางและหลังจากต้นไม้เดียวกัน</p>
+
+<p><strong>คำตอบ:</strong> ดูตารางในหัวข้อ 6.5</p>
+
+<hr>
+
+<h2 id="แบบปฏบตการขอสอบ">แบบปฏิบัติการข้อสอบ</h2>
+
+<h3 id="ขอควบคมเลอกตอบ-จำนวน-8-ขอ">ข้อควบคุมเลือกตอบ (จำนวน 8 ข้อ)</h3>
+
+<p><strong>ข้อ 1.</strong> โหนดบนสุดของต้นไม้เรียกว่า</p>
+<ul>
+<li>ก. ใบ</li>
+<li>ข. ราก</li>
+<li>ค. โหนดลูก</li>
+<li>ง. โหนดพี่น้อง</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 2.</strong> ไบนารีทรีคือต้นไม้ที่แต่ละโหนดมีลูกสูงสุดกี่ตัว</p>
+<ul>
+<li>ก. 1</li>
+<li>ข. 2</li>
+<li>ค. 3</li>
+<li>ง. ไม่จำกัด</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 3.</strong> ในไบนารีเซิร์ชทรี ค่าที่อยู่ในต้นย่อยซ้ายต้อง</p>
+<ul>
+<li>ก. มากกว่าโหนดปัจจุบัน</li>
+<li>ข. น้อยกว่าโหนดปัจจุบัน</li>
+<li>ค. เท่ากับโหนดปัจจุบัน</li>
+<li>ง. เป็นจำนวนคู่</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 4.</strong> การทบทวนแบบใดของ BST จะได้ค่าเรียงจากน้อยไปมาก</p>
+<ul>
+<li>ก. Pre-order</li>
+<li>ข. In-order</li>
+<li>ค. Post-order</li>
+<li>ง. Level-order</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 5.</strong> ความซับซ้อนการค้นหาใน BST กรณีแย่ที่สุดคือ</p>
+<ul>
+<li>ก. O(1)</li>
+<li>ข. O(log n)</li>
+<li>ค. O(n)</li>
+<li>ง. O(n log n)</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong> (เกิดเมื่อต้นไม้เกลี่ยเป็นเส้นตรง)</p>
+
+<p><strong>ข้อ 6.</strong> โหนดที่ไม่มีลูกเรียกว่า</p>
+<ul>
+<li>ก. ราก</li>
+<li>ข. โหนดภายใน</li>
+<li>ค. ใบ (Leaf)</li>
+<li>ง. โหนดพ่อ</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<p><strong>ข้อ 7.</strong> การลบโหนดที่มีลูกสองตัวใน BST ต้องทำอย่างไร</p>
+<ul>
+<li>ก. ลบทิ้งเลย</li>
+<li>ข. หาค่าตัวสืบตำแหน่งมาแทนที่</li>
+<li>ค. ย้ายลูกซ้ายขึ้นแทนที่</li>
+<li>ง. ไม่สามารถลบได้</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 8.</strong> ข้อใดไม่ใช่การทบทวนต้นไม้</p>
+<ul>
+<li>ก. Pre-order</li>
+<li>ข. In-order</li>
+<li>ค. Post-order</li>
+<li>ง. Random-order</li>
+</ul>
+
+<p><strong>ตอบ: ง</strong></p>
+
+<h3 id="ขอปฏบตการ-จำนวน-2-ขอ">ข้อปฏิบัติการ (จำนวน 2 ข้อ)</h3>
+
+<p><strong>ข้อ 9.</strong> จงเขียนโค้ดภาษา C หรือ Python จัดการไบนารีเซิร์ชทรี รองรับการแทรก ลบ ค้นหา และทบทวนทุกแบบ</p>
+
+<p><strong>ข้อ 10.</strong> จงเขียนโค้ดแสดงผลการทบทวนต้นไม้แบบ Level-order โดยใช้คิว</p>
+
+<hr>
+
+<h2 id="ภาคผนก">ภาคผนก</h2>
+
+<h3 id="ภาคผนก-61-โคดตวอยางไบนารเซรชทรภาษา-c--python--java">ภาคผนก 6.1 โค้ดตัวอย่างไบนารีเซิร์ชทรีภาษา C / Python / Java</h3>
+
+<p><strong>ภาษา Java – คลาส BST ครบถ้วน:</strong></p>
+<pre><code class=" language-java">class Node {
+    int data;
+    Node left, right;
+    
+    Node(int data) {
+        this.data = data;
+        this.left = this.right = null;
+    }
+}
+
+class BinarySearchTree {
+    Node root;
+    
+    void insert(int data) {
+        root = insertRec(root, data);
+    }
+    
+    Node insertRec(Node root, int data) {
+        if (root == null) {
+            root = new Node(data);
+            return root;
+        }
+        if (data &lt; root.data)
+            root.left = insertRec(root.left, data);
+        else if (data &gt; root.data)
+            root.right = insertRec(root.right, data);
+        return root;
+    }
+    
+    void inorder() {
+        inorderRec(root);
+    }
+    
+    void inorderRec(Node root) {
+        if (root != null) {
+            inorderRec(root.left);
+            System.out.print(root.data + &quot; &quot;);
+            inorderRec(root.right);
+        }
+    }
+}</code></pre>
+
+<h3 id="ภาคผนก-62-แบบฝกหดสรางตนไมจากโจทยตางๆ">ภาคผนก 6.2 แบบฝึกหัดสร้างต้นไม้จากโจทย์ต่างๆ</h3>
+
+<ol>
+<li>สร้าง BST จากค่า: 15, 10, 20, 8, 12, 17, 25 แล้วเขียนผลการทบทวนทุกแบบ</li>
+<li>ลบค่า 10 จากต้นไม้ในข้อ 1 แสดงขั้นตอนการลบ</li>
+<li>หาความสูงของต้นไม้จากข้อ 1</li>
+</ol>
+
+<hr>
+
+<h2 id="อางอง">อ้างอิง</h2>
+
+<ul>
+<li>เอกสารประกอบการสอน บทที่ 6 ต้นไม้และไบนารีเซิร์ชทรี</li>
+<li>หนังสืออ้างอิงโครงสร้างข้อมูลไม่เชิงเส้น</li>
+</ul>
+
+        <div class="chapter-nav">
+          <a href="chapter-05.html" class="nav-btn"><span class="sr-only">ย้อนกลับ</span>← บทก่อนหน้า: 5 ลิงก์ลิสต์ (Linked List)</a>
+          <a href="chapter-07.html" class="nav-btn">บทถัดไป: 7 ตารางแฮช (Hash Table) <span class="sr-only">ถัดไป</span>→</a>
+        </div>
+      </article>
+    </main>
+  </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-text">&copy; 2026 MaeeYeng — โครงสร้างข้อมูลและอัลกอริทึม. สงวนลิขสิทธิ์ทุกประการ.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('nav-menu');
+      const btn = document.querySelector('.mobile-menu-btn');
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    }
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('nav-menu').classList.remove('open');
+        document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>บทที่ 13 การแบ่งและพิชิต (Divide and Conquer) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</title>
+  <meta name="description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta name="author" content="MaeeYeng">
+  <meta name="keywords" content="โครงสร้างข้อมูล, อัลกอริทึม, DSA, Data Structures, Algorithms, Big O, Sorting, Searching, Graph, Tree, Hash Table, Dynamic Programming, Greedy, Divide and Conquer, C, Python, Java">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://maaeyeng2517.github.io/algotithm-dsa/chapter-13.html">
+  <link rel="stylesheet" href="style.css">
+  <!-- Open Graph -->
+  <meta property="og:title" content="บทที่ 13 การแบ่งและพิชิต (Divide and Conquer) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maaeyeng2517.github.io/algotithm-dsa/chapter-13.html">
+  
+  <meta property="og:site_name" content="DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:locale" content="th_TH">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="บทที่ 13 การแบ่งและพิชิต (Divide and Conquer) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta name="twitter:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'base', securityLevel: 'loose' });</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">DSA</div>
+        <span>DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</span>
+      </a>
+      <button class="mobile-menu-btn" aria-label="เปิดเมนูนำทาง" aria-expanded="false" onclick="toggleMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="chapter-01.html">1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+        <li><a href="chapter-02.html">2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+        <li><a href="chapter-03.html">3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+        <li><a href="chapter-04.html">4 สแตกและคิว (Stack and Queue)</a></li>
+        <li><a href="chapter-05.html">5 ลิงก์ลิสต์ (Linked List)</a></li>
+        <li><a href="chapter-06.html">6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+        <li><a href="chapter-07.html">7 ตารางแฮช (Hash Table)</a></li>
+        <li><a href="chapter-08.html">8 กราฟ (Graph)</a></li>
+        <li><a href="chapter-09.html">9 การเรียงลำดับ (Sorting)</a></li>
+        <li><a href="chapter-10.html">10 การค้นหา (Searching)</a></li>
+        <li><a href="chapter-11.html">11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+        <li><a href="chapter-12.html">12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+        <li><a href="chapter-13.html" class="active">13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+        <li><a href="chapter-14.html">14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+        <li><a href="chapter-15.html">15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+
+  <nav class="breadcrumb">
+    <a href="index.html">หน้าแรก</a>
+    <span>›</span>
+    <span>บทที่ 13 การแบ่งและพิชิต (Divide and Conquer)</span>
+  </nav>
+
+  <div class="content-grid">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h3>สารบัญบทเรียน<span class="badge">15 บท</span></h3>
+        <ul class="chapter-list">
+    <li><a href="chapter-01.html"><span class="chapter-number">01</span>1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+    <li><a href="chapter-02.html"><span class="chapter-number">02</span>2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+    <li><a href="chapter-03.html"><span class="chapter-number">03</span>3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+    <li><a href="chapter-04.html"><span class="chapter-number">04</span>4 สแตกและคิว (Stack and Queue)</a></li>
+    <li><a href="chapter-05.html"><span class="chapter-number">05</span>5 ลิงก์ลิสต์ (Linked List)</a></li>
+    <li><a href="chapter-06.html"><span class="chapter-number">06</span>6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+    <li><a href="chapter-07.html"><span class="chapter-number">07</span>7 ตารางแฮช (Hash Table)</a></li>
+    <li><a href="chapter-08.html"><span class="chapter-number">08</span>8 กราฟ (Graph)</a></li>
+    <li><a href="chapter-09.html"><span class="chapter-number">09</span>9 การเรียงลำดับ (Sorting)</a></li>
+    <li><a href="chapter-10.html"><span class="chapter-number">10</span>10 การค้นหา (Searching)</a></li>
+    <li><a href="chapter-11.html"><span class="chapter-number">11</span>11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+    <li><a href="chapter-12.html"><span class="chapter-number">12</span>12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+    <li><a href="chapter-13.html" class="active"><span class="chapter-number">13</span>13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+    <li><a href="chapter-14.html"><span class="chapter-number">14</span>14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+    <li><a href="chapter-15.html"><span class="chapter-number">15</span>15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content-area" id="main-content">
+      <article>
+        <div class="article-meta">
+          <span class="meta-item"><strong>บทเรียน:</strong> บทที่ 13 การแบ่งและพิชิต (Divide and Conquer)</span>
+          <span class="meta-item"><strong>หมวด:</strong> โครงสร้างข้อมูลและอัลกอริทึม</span>
+          <span class="meta-item"><strong>ภาษา:</strong> ไทย / English</span>
+        </div>
+        <h1>บทที่ 13 การแบ่งและพิชิต (Divide and Conquer)</h1>
+        
+<h2 id="วตถประสงคการเรยนร">วัตถุประสงค์การเรียนรู้</h2>
+<p>เมื่อเรียนจบบทนี้ นักศึกษาจะสามารถ</p>
+<ol>
+<li>อธิบายแนวคิดการแบ่งและพิชิต (Divide and Conquer)</li>
+<li>อธิบายอัลกอริทึมตัวอย่าง เช่น เมอร์จ์ซอร์ต ควิกซอร์ต การคูณเมทริกซ์ของสตรัสเซน</li>
+<li>วิเคราะห์ความซับซ้อนโดยใช้ทฤษฎีบทมาสเตอร์ (Master Theorem)</li>
+<li>แยกแยะการแบ่งและพิชิตกับไดนามิกโปรแกรมมิง</li>
+<li>เขียนโปรแกรมแก้ปัญหาด้วยวิธีการแบ่งและพิชิตได้อย่างถูกต้อง</li>
+</ol>
+
+<h2 id="การประเมน">การประเมิน</h2>
+<table>
+<tr><th>รายการ</th><th>น้ำหนัก</th><th>หมายเหตุ</th></tr>
+<tr><td>งานเขียนโปรแกรมแก้ปัญหาด้วยการแบ่งและพิชิต</td><td>15%</td><td>โค้ดภาษา C/Python/Java</td></tr>
+<tr><td>แบบทดสอบท้ายบท</td><td>10%</td><td>ข้อควบคุมเลือกตอบและอัตนัย</td></tr>
+<tr><td>การเข้าร่วมกิจกรรมเปรียบเทียบวิธีแก้ปัญหา</td><td>5%</td><td>กิจกรรมกลุ่ม</td></tr>
+</table>
+
+<hr>
+
+<h2 id="131-แนวคดการแบงและพชต">13.1 แนวคิดการแบ่งและพิชิต</h2>
+
+<p>การแบ่งและพิชิต (Divide and Conquer) คือกลยุทธ์การแก้ปัญหาที่แบ่งปัญหาใหญ่ออกเป็นปัญหาย่อยหลายๆ ปัญหา แก้แต่ละปัญหาย่อยแยกกัน แล้วนำผลลัพธ์มารวมกัน</p>
+
+<pre><code class=" language-mermaid">graph TD
+    A[ปัญหาใหญ่] --&gt; B[แบ่งออกเป็นปัญหาย่อย]
+    B --&gt; C[พิชิต: แก้ปัญหาย่อยแต่ละอัน]
+    C --&gt; D[รวม: นำผลลัพธ์มารวมกัน]
+    D --&gt; E[คำตอบของปัญหาใหญ่]
+    
+    style A fill:#E3F2FD
+    style C fill:#FFF9C4
+    style E fill:#C8E6C9</code></pre>
+
+<h3 id="สามขนตอนหลก">สามขั้นตอนหลัก</h3>
+
+<ol>
+<li><strong>แบ่ง (Divide)</strong> – แบ่งปัญหาออกเป็นปัญหาย่อยที่มีโครงสร้างเดียวกันแต่ขนาดเล็กลง</li>
+<li><strong>พิชิต (Conquer)</strong> – แก้ปัญหาย่อยแต่ละอัน (มักใช้การเรียกซ้ำ)</li>
+<li><strong>รวม (Combine)</strong> – นำคำตอบของปัญหาย่อยมารวมเป็นคำตอบของปัญหาใหญ่</li>
+</ol>
+
+<hr>
+
+<h2 id="132-ตวอยางอลกอรทมแบงและพชต">13.2 ตัวอย่างอัลกอริทึมแบ่งและพิชิต</h2>
+
+<h3 id="1-เมอรจซอรต-merge-sort">1. เมอร์จ์ซอร์ต (Merge Sort)</h3>
+<p>แบ่งอาเรย์ออกเป็นสองส่วน เรียงแต่ละส่วนแล้วควบรวมกลับเข้าด้วยกัน</p>
+
+<pre><code class="">[38, 27, 43, 3, 9, 82, 10]
+   แบ่ง → [38, 27, 43, 3] [9, 82, 10]
+   เรียง → [3, 27, 38, 43] [9, 10, 82]
+   ควบรวม → [3, 9, 10, 27, 38, 43, 82]</code></pre>
+
+<h3 id="2-ควกซอรต-quick-sort">2. ควิกซอร์ต (Quick Sort)</h3>
+<p>เลือกปิโวต แบ่งอาเรย์ออกเป็นส่วนที่น้อยกว่าและมากกว่าปิโวต แล้วเรียงซ้ำ</p>
+
+<pre><code class="">[10, 80, 30, 90, 40, 50, 70] (pivot = 70)
+   แบ่ง → [10, 30, 40, 50] [70] [80, 90]
+   เรียงซ้ำแต่ละส่วน</code></pre>
+
+<h3 id="3-การคนหาคาสงสดและตำสด">3. การค้นหาค่าสูงสุดและต่ำสุด</h3>
+<p>แบ่งอาเรย์ออกเป็นสองส่วน หาค่าสูงสุดและต่ำสุดในแต่ละส่วน แล้วเปรียบเทียบกัน</p>
+
+<h3 id="4-การคณเมทรกซของสตรสเซน-strassens-matrix-multiplication">4. การคูณเมทริกซ์ของสตรัสเซน (Strassen's Matrix Multiplication)</h3>
+<p>คูณเมทริกซ์ 2×2 โดยใช้การคูณ 7 ครั้งแทนที่จะเป็น 8 ครั้ง ลดความซับซ้อนจาก O(n³) เป็น O(n^2.81)</p>
+
+<hr>
+
+<h2 id="133-ทฤษฎบทมาสเตอร-master-theorem">13.3 ทฤษฎีบทมาสเตอร์ (Master Theorem)</h2>
+
+<p>ใช้วิเคราะห์ความซับซ้อนของอัลกอริทึมแบ่งและพิชิตที่มีรูปแบบ:</p>
+
+<pre><code class="">T(n) = a · T(n/b) + f(n)</code></pre>
+
+<p>เมื่อ:</p>
+<ul>
+<li>a = จำนวนปัญหาย่อย</li>
+<li>n/b = ขนาดของแต่ละปัญหาย่อย</li>
+<li>f(n) = เวลาในการแบ่งและรวม</li>
+</ul>
+
+<h3 id="กรณของทฤษฎบทมาสเตอร">กรณีของทฤษฎีบทมาสเตอร์</h3>
+
+<table>
+<tr><th>กรณี</th><th>เงื่อนไข</th><th>ผลลัพธ์ T(n)</th></tr>
+<tr><td>กรณี 1</td><td>f(n) = O(n^(log_b a - ε))</td><td>T(n) = Θ(n^(log_b a))</td></tr>
+<tr><td>กรณี 2</td><td>f(n) = Θ(n^(log_b a))</td><td>T(n) = Θ(n^(log_b a) · log n)</td></tr>
+<tr><td>กรณี 3</td><td>f(n) = Ω(n^(log_b a + ε))</td><td>T(n) = Θ(f(n))</td></tr>
+</table>
+
+<h3 id="ตวอยางการใชทฤษฎบทมาสเตอร">ตัวอย่างการใช้ทฤษฎีบทมาสเตอร์</h3>
+
+<p><strong>เมอร์จ์ซอร์ต:</strong> T(n) = 2T(n/2) + O(n)</p>
+<ul>
+<li>a = 2, b = 2, log₂2 = 1, f(n) = O(n)</li>
+<li>f(n) = Θ(n¹) → กรณี 2</li>
+<li>T(n) = Θ(n log n)</li>
+</ul>
+
+<p><strong>ควิกซอร์ต (กรณีดีที่สุด):</strong> T(n) = 2T(n/2) + O(n)</p>
+<ul>
+<li>ผลลัพธ์เดียวกับเมอร์จ์ซอร์ต → T(n) = Θ(n log n)</li>
+</ul>
+
+<p><strong>การคูณเมทริกซ์แบบธรรมดา:</strong> T(n) = 8T(n/2) + O(n²)</p>
+<ul>
+<li>a = 8, b = 2, log₂8 = 3, f(n) = O(n²)</li>
+<li>f(n) = O(n^(3-1)) → กรณี 1 (ε = 1)</li>
+<li>T(n) = Θ(n³)</li>
+</ul>
+
+<p><strong>สตรัสเซน:</strong> T(n) = 7T(n/2) + O(n²)</p>
+<ul>
+<li>a = 7, b = 2, log₂7 ≈ 2.81, f(n) = O(n²)</li>
+<li>f(n) = O(n^(2.81-0.81)) → กรณี 1 (ε = 0.81)</li>
+<li>T(n) = Θ(n^2.81)</li>
+</ul>
+
+<hr>
+
+<h2 id="134-ความแตกตางระหวางการแบงและพชตกบไดนามกโปรแกรมมง">13.4 ความแตกต่างระหว่างการแบ่งและพิชิตกับไดนามิกโปรแกรมมิง</h2>
+
+<table>
+<tr><th>ด้าน</th><th>การแบ่งและพิชิต</th><th>ไดนามิกโปรแกรมมิง</th></tr>
+<tr><td>ปัญหาย่อย</td><td>ไม่ทับซ้อนกัน</td><td>ทับซ้อนกัน</td></tr>
+<tr><td>การแก้ปัญหาย่อย</td><td>แก้อิสระต่อกัน</td><td>เก็บผลลัพธ์ไว้ใช้ซ้ำ</td></tr>
+<tr><td>การใช้การเรียกซ้ำ</td><td>ใช้บ่อย</td><td>ใช้บ่อย (แบบบนลงล่าง)</td></tr>
+<tr><td>ตัวอย่าง</td><td>เมอร์จ์ซอร์ต ควิกซอร์ต</td><td>ฟีโบนักชี กระเป๋าเดินทาง LCS</td></tr>
+</table>
+
+<hr>
+
+<h2 id="แบบฝกหด">แบบฝึกหัด</h2>
+
+<h3 id="ขอท-1">ข้อที่ 1</h3>
+<p>จงอธิบายขั้นตอนของเมอร์จ์ซอร์ตด้วยการแบ่งและพิชิต</p>
+
+<p><strong>คำตอบ:</strong></p>
+<ol>
+<li><strong>แบ่ง:</strong> แบ่งอาเรย์ออกเป็นสองส่วนเท่าๆ กัน</li>
+<li><strong>พิชิต:</strong> เรียงแต่ละส่วนโดยใช้เมอร์จ์ซอร์ตแบบเรียกซ้ำ</li>
+<li><strong>รวม:</strong> ควบรวมสองส่วนที่เรียงแล้วเข้าด้วยกันเป็นอาเรย์เดียวที่เรียงลำดับ</li>
+</ol>
+
+<h3 id="ขอท-2">ข้อที่ 2</h3>
+<p>จงใช้ทฤษฎีบทมาสเตอร์วิเคราะห์ความซับซ้อนของเมอร์จ์ซอร์ต</p>
+
+<p><strong>คำตอบ:</strong></p>
+<p>T(n) = 2T(n/2) + O(n)</p>
+<ul>
+<li>a = 2, b = 2, log₂2 = 1</li>
+<li>f(n) = O(n) = Θ(n¹)</li>
+<li>เข้าข่ายกรณี 2 ของทฤษฎีบทมาสเตอร์</li>
+<li>T(n) = Θ(n log n)</li>
+</ul>
+
+<h3 id="ขอท-3">ข้อที่ 3</h3>
+<p>จงเปรียบเทียบการแบ่งและพิชิตกับไดนามิกโปรแกรมมิงในกรณีแก้ปัญหาเดียวกัน</p>
+
+<p><strong>คำตอบ:</strong> ดูตารางในหัวข้อ 13.4</p>
+
+<hr>
+
+<h2 id="แบบปฏบตการขอสอบ">แบบปฏิบัติการข้อสอบ</h2>
+
+<h3 id="ขอควบคมเลอกตอบ-จำนวน-6-ขอ">ข้อควบคุมเลือกตอบ (จำนวน 6 ข้อ)</h3>
+
+<p><strong>ข้อ 1.</strong> การแบ่งและพิชิตมีกี่ขั้นตอนหลัก</p>
+<ul>
+<li>ก. 2</li>
+<li>ข. 3</li>
+<li>ค. 4</li>
+<li>ง. 5</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong> (แบ่ง พิชิต รวม)</p>
+
+<p><strong>ข้อ 2.</strong> ทฤษฎีบทมาสเตอร์ใช้สำหรับอะไร</p>
+<ul>
+<li>ก. วิเคราะห์ความซับซ้อนของอัลกอริทึมแบ่งและพิชิต</li>
+<li>ข. วิเคราะห์ความซับซ้อนของอัลกอริทึมเชิงละม่วน</li>
+<li>ค. วิเคราะห์ความซับซ้อนของอัลกอริทึมค้นหา</li>
+<li>ง. วิเคราะห์ความซับซ้อนของอัลกอริทึมเรียงลำดับทุกชนิด</li>
+</ul>
+
+<p><strong>ตอบ: ก</strong></p>
+
+<p><strong>ข้อ 3.</strong> เมอร์จ์ซอร์ตมีความซับซ้อนเท่าใดในทุกกรณี</p>
+<ul>
+<li>ก. O(n)</li>
+<li>ข. O(n log n)</li>
+<li>ค. O(n²)</li>
+<li>ง. O(log n)</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 4.</strong> ข้อใดไม่ใช่ตัวอย่างของอัลกอริทึมแบ่งและพิชิต</p>
+<ul>
+<li>ก. เมอร์จ์ซอร์ต</li>
+<li>ข. ควิกซอร์ต</li>
+<li>ค. สตรัสเซน</li>
+<li>ง. ฟีโบนักชีแบบไดนามิกโปรแกรมมิง</li>
+</ul>
+
+<p><strong>ตอบ: ง</strong></p>
+
+<p><strong>ข้อ 5.</strong> ในทฤษฎีบทมาสเตอร์ T(n) = aT(n/b) + f(n) ตัวแปร a หมายถึงอะไร</p>
+<ul>
+<li>ก. ขนาดของปัญหาย่อย</li>
+<li>ข. จำนวนปัญหาย่อย</li>
+<li>ค. เวลาในการแบ่งและรวม</li>
+<li>ง. ขนาดของปัญหาเดิม</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 6.</strong> ความแตกต่างหลักระหว่างการแบ่งและพิชิตกับไดนามิกโปรแกรมมิงคือ</p>
+<ul>
+<li>ก. การแบ่งและพิชิตใช้การเรียกซ้ำ ไดนามิกโปรแกรมมิงไม่ใช้</li>
+<li>ข. การแบ่งและพิชิตมีปัญหาย่อยทับซ้อน ไดนามิกโปรแกรมมิงไม่มี</li>
+<li>ค. การแบ่งและพิชิตไม่มีปัญหาย่อยทับซ้อน ไดนามิกโปรแกรมมิงมี</li>
+<li>ง. ไม่มีความแตกต่าง</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<h3 id="ขออตนย-จำนวน-2-ขอ">ข้ออัตนัย (จำนวน 2 ข้อ)</h3>
+
+<p><strong>ข้อ 7.</strong> จงเขียนโค้ดภาษา C หรือ Python แก้ปัญหาหาค่าสูงสุดและต่ำสุดในอาเรย์โดยใช้วิธีการแบ่งและพิชิต</p>
+
+<p><strong>ข้อ 8.</strong> จงใช้ทฤษฎีบทมาสเตอร์วิเคราะห์ความซับซ้อนของควิกซอร์ตในกรณีที่ดีที่สุด</p>
+
+<hr>
+
+<h2 id="ภาคผนก">ภาคผนก</h2>
+
+<h3 id="ภาคผนก-131-โคดตวอยางอลกอรทมแบงและพชตทกตว">ภาคผนก 13.1 โค้ดตัวอย่างอัลกอริทึมแบ่งและพิชิตทุกตัว</h3>
+
+<p><strong>ภาษา Python – ค้นหาค่าสูงสุดและต่ำสุดแบบแบ่งและพิชิต:</strong></p>
+<pre><code class=" language-python">def find_min_max(arr, low, high):
+    # กรณีมีสมาชิกตัวเดียว
+    if low == high:
+        return arr[low], arr[low]
+    
+    # กรณีมีสมาชิกสองตัว
+    if high == low + 1:
+        if arr[low] &lt; arr[high]:
+            return arr[low], arr[high]
+        else:
+            return arr[high], arr[low]
+    
+    # แบ่งออกเป็นสองส่วน
+    mid = (low + high) // 2
+    min1, max1 = find_min_max(arr, low, mid)
+    min2, max2 = find_min_max(arr, mid + 1, high)
+    
+    # รวมผลลัพธ์
+    return min(min1, min2), max(max1, max2)
+
+
+# การใช้งาน
+arr = [1000, 11, 445, 1, 330, 3000]
+min_val, max_val = find_min_max(arr, 0, len(arr) - 1)
+print(f&quot;ค่าน้อยที่สุด: {min_val}, ค่ามากที่สุด: {max_val}&quot;)</code></pre>
+
+<h3 id="ภาคผนก-132-ตวอยางการใชทฤษฎบทมาสเตอรกบความสมพนธซำตางๆ">ภาคผนก 13.2 ตัวอย่างการใช้ทฤษฎีบทมาสเตอร์กับความสัมพันธ์ซ้ำต่างๆ</h3>
+
+<table>
+<tr><th>อัลกอริทึม</th><th>ความสัมพันธ์ซ้ำ</th><th>log_b a</th><th>กรณี</th><th>ความซับซ้อน</th></tr>
+<tr><td>เมอร์จ์ซอร์ต</td><td>T(n) = 2T(n/2) + O(n)</td><td>1</td><td>กรณี 2</td><td>Θ(n log n)</td></tr>
+<tr><td>ควิกซอร์ต (ดีที่สุด)</td><td>T(n) = 2T(n/2) + O(n)</td><td>1</td><td>กรณี 2</td><td>Θ(n log n)</td></tr>
+<tr><td>สตรัสเซน</td><td>T(n) = 7T(n/2) + O(n²)</td><td>2.81</td><td>กรณี 1</td><td>Θ(n^2.81)</td></tr>
+<tr><td>ค้นหาแบบไบนารี</td><td>T(n) = T(n/2) + O(1)</td><td>0</td><td>กรณี 2</td><td>Θ(log n)</td></tr>
+</table>
+
+<hr>
+
+<h2 id="อางอง">อ้างอิง</h2>
+
+<ul>
+<li>เอกสารประกอบการสอน บทที่ 13 การแบ่งและพิชิต</li>
+<li>Cormen, T. H., et al. <em>Introduction to Algorithms</em>. Chapter on Divide and Conquer, MIT Press.</li>
+</ul>
+
+        <div class="chapter-nav">
+          <a href="chapter-12.html" class="nav-btn"><span class="sr-only">ย้อนกลับ</span>← บทก่อนหน้า: 12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a>
+          <a href="chapter-14.html" class="nav-btn">บทถัดไป: 14 อัลกอริทึมสตริง (String Algorithm) <span class="sr-only">ถัดไป</span>→</a>
+        </div>
+      </article>
+    </main>
+  </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-text">&copy; 2026 MaeeYeng — โครงสร้างข้อมูลและอัลกอริทึม. สงวนลิขสิทธิ์ทุกประการ.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('nav-menu');
+      const btn = document.querySelector('.mobile-menu-btn');
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    }
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('nav-menu').classList.remove('open');
+        document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>

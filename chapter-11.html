@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>บทที่ 11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</title>
+  <meta name="description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta name="author" content="MaeeYeng">
+  <meta name="keywords" content="โครงสร้างข้อมูล, อัลกอริทึม, DSA, Data Structures, Algorithms, Big O, Sorting, Searching, Graph, Tree, Hash Table, Dynamic Programming, Greedy, Divide and Conquer, C, Python, Java">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://maaeyeng2517.github.io/algotithm-dsa/chapter-11.html">
+  <link rel="stylesheet" href="style.css">
+  <!-- Open Graph -->
+  <meta property="og:title" content="บทที่ 11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maaeyeng2517.github.io/algotithm-dsa/chapter-11.html">
+  
+  <meta property="og:site_name" content="DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:locale" content="th_TH">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="บทที่ 11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta name="twitter:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'base', securityLevel: 'loose' });</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">DSA</div>
+        <span>DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</span>
+      </a>
+      <button class="mobile-menu-btn" aria-label="เปิดเมนูนำทาง" aria-expanded="false" onclick="toggleMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="chapter-01.html">1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+        <li><a href="chapter-02.html">2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+        <li><a href="chapter-03.html">3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+        <li><a href="chapter-04.html">4 สแตกและคิว (Stack and Queue)</a></li>
+        <li><a href="chapter-05.html">5 ลิงก์ลิสต์ (Linked List)</a></li>
+        <li><a href="chapter-06.html">6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+        <li><a href="chapter-07.html">7 ตารางแฮช (Hash Table)</a></li>
+        <li><a href="chapter-08.html">8 กราฟ (Graph)</a></li>
+        <li><a href="chapter-09.html">9 การเรียงลำดับ (Sorting)</a></li>
+        <li><a href="chapter-10.html">10 การค้นหา (Searching)</a></li>
+        <li><a href="chapter-11.html" class="active">11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+        <li><a href="chapter-12.html">12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+        <li><a href="chapter-13.html">13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+        <li><a href="chapter-14.html">14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+        <li><a href="chapter-15.html">15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+
+  <nav class="breadcrumb">
+    <a href="index.html">หน้าแรก</a>
+    <span>›</span>
+    <span>บทที่ 11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</span>
+  </nav>
+
+  <div class="content-grid">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h3>สารบัญบทเรียน<span class="badge">15 บท</span></h3>
+        <ul class="chapter-list">
+    <li><a href="chapter-01.html"><span class="chapter-number">01</span>1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+    <li><a href="chapter-02.html"><span class="chapter-number">02</span>2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+    <li><a href="chapter-03.html"><span class="chapter-number">03</span>3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+    <li><a href="chapter-04.html"><span class="chapter-number">04</span>4 สแตกและคิว (Stack and Queue)</a></li>
+    <li><a href="chapter-05.html"><span class="chapter-number">05</span>5 ลิงก์ลิสต์ (Linked List)</a></li>
+    <li><a href="chapter-06.html"><span class="chapter-number">06</span>6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+    <li><a href="chapter-07.html"><span class="chapter-number">07</span>7 ตารางแฮช (Hash Table)</a></li>
+    <li><a href="chapter-08.html"><span class="chapter-number">08</span>8 กราฟ (Graph)</a></li>
+    <li><a href="chapter-09.html"><span class="chapter-number">09</span>9 การเรียงลำดับ (Sorting)</a></li>
+    <li><a href="chapter-10.html"><span class="chapter-number">10</span>10 การค้นหา (Searching)</a></li>
+    <li><a href="chapter-11.html" class="active"><span class="chapter-number">11</span>11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+    <li><a href="chapter-12.html"><span class="chapter-number">12</span>12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+    <li><a href="chapter-13.html"><span class="chapter-number">13</span>13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+    <li><a href="chapter-14.html"><span class="chapter-number">14</span>14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+    <li><a href="chapter-15.html"><span class="chapter-number">15</span>15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content-area" id="main-content">
+      <article>
+        <div class="article-meta">
+          <span class="meta-item"><strong>บทเรียน:</strong> บทที่ 11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</span>
+          <span class="meta-item"><strong>หมวด:</strong> โครงสร้างข้อมูลและอัลกอริทึม</span>
+          <span class="meta-item"><strong>ภาษา:</strong> ไทย / English</span>
+        </div>
+        <h1>บทที่ 11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</h1>
+        
+<h2 id="วตถประสงคการเรยนร">วัตถุประสงค์การเรียนรู้</h2>
+<p>เมื่อเรียนจบบทนี้ นักศึกษาจะสามารถ</p>
+<ol>
+<li>อธิบายแนวคิดอัลกอริทึมเชิงละม่วนและคุณสมบัติการเลือกอย่างเหมาะสมในท้องถิ่น</li>
+<li>อธิบายอัลกอริทึมเชิงละม่วนตัวอย่าง เช่น ฮัฟฟ์แมน โครสคัล ปริมส์</li>
+<li>วิเคราะห์ว่าเมื่อใดที่อัลกอริทึมเชิงละม่วนให้คำตอบที่ถูกต้องที่สุด</li>
+<li>แยกแยะอัลกอริทึมเชิงละม่วนกับอัลกอริทึมประเภทอื่น</li>
+<li>เขียนโปรแกรมแก้ปัญหาด้วยอัลกอริทึมเชิงละม่วนได้อย่างถูกต้อง</li>
+</ol>
+
+<h2 id="การประเมน">การประเมิน</h2>
+<table>
+<tr><th>รายการ</th><th>น้ำหนัก</th><th>หมายเหตุ</th></tr>
+<tr><td>งานเขียนโปรแกรมแก้ปัญหาด้วยอัลกอริทึมเชิงละม่วน</td><td>20%</td><td>โค้ดภาษา C/Python/Java</td></tr>
+<tr><td>แบบทดสอบท้ายบท</td><td>10%</td><td>ข้อควบคุมเลือกตอบและปฏิบัติการ</td></tr>
+<tr><td>การนำเสนอกรณีศึกษาการใช้งานจริง</td><td>10%</td><td>นำเสนอกรณีศึกษาจากชีวิตจริง</td></tr>
+</table>
+
+<hr>
+
+<h2 id="111-แนวคดอลกอรทมเชงละมวน">11.1 แนวคิดอัลกอริทึมเชิงละม่วน</h2>
+
+<p>อัลกอริทึมเชิงละม่วน (Greedy Algorithm) คืออัลกอริทึมที่ในแต่ละขั้นตอนจะเลือกทางเลือกที่ดูดีที่สุดในขณะนั้น (ท้องถิ่น) โดยหวังว่าจะนำไปสู่คำตอบที่ดีที่สุดโดยรวม (ส่วนรวม)</p>
+
+<h3 id="เปรยบเทยบเชงภาพ">เปรียบเทียบเชิงภาพ</h3>
+
+<pre><code class=" language-mermaid">graph TD
+    A[จุดเริ่มต้น] --&gt; B{เลือกเส้นทาง}
+    B --&gt;|เส้นทางสั้นที่สุดในท้องถิ่น| C[เลือกเส้นนี้ทันที]
+    B --&gt;|พิจารณาทุกเส้นทางก่อน| D[อัลกอริทึมประเภทอื่น]
+    C --&gt; E[อาจได้คำตอบที่ดีที่สุด หรือไม่ก็ได้]
+    D --&gt; F[ใช้เวลามากกว่า แต่มั่นใจได้ว่าดีที่สุด]
+    
+    style A fill:#E3F2FD
+    style C fill:#FFF9C4
+    style E fill:#FFCDD2
+    style F fill:#C8E6C9</code></pre>
+
+<h3 id="คณสมบตทจำเปนสำหรบอลกอรทมเชงละมวน">คุณสมบัติที่จำเป็นสำหรับอัลกอริทึมเชิงละม่วน</h3>
+
+<ol>
+<li><strong>คุณสมบัติการเลือกอย่างเหมาะสมในท้องถิ่น (Greedy Choice Property)</strong> – การเลือกทางเลือกที่ดีที่สุดในท้องถิ่นนำไปสู่คำตอบที่ดีที่สุดโดยรวม</li>
+<li><strong>โครงสร้างทบทวนที่เหมาะสมที่สุด (Optimal Substructure)</strong> – คำตอบที่ดีที่สุดของปัญหาเกิดจากคำตอบที่ดีที่สุดของปัญหาย่อย</li>
+</ol>
+
+<hr>
+
+<h2 id="112-ตวอยางอลกอรทมเชงละมวน">11.2 ตัวอย่างอัลกอริทึมเชิงละม่วน</h2>
+
+<h3 id="1-อลกอรทมฮฟฟแมน-huffman-coding">1. อัลกอริทึมฮัฟฟ์แมน (Huffman Coding)</h3>
+
+<p>ใช้สำหรับการบีบอัดข้อมูล กำหนดรหัสบิตสั้นให้กับตัวอักษรที่ปรากฏบ่อย และรหัสบิตยาวให้กับตัวอักษรที่ปรากฏน้อย</p>
+
+<pre><code class=" language-mermaid">graph TD
+    A[ความถี่: A=5, B=9, C=12, D=13, E=16, F=45]
+    A --&gt; B[นำสองค่าน้อยที่สุดมารวมกัน]
+    B --&gt; C[สร้างต้นไม้ฮัฟฟ์แมน]
+    C --&gt; D[กำหนดรหัส: ขอบซ้าย=0 ขอบขวา=1]
+    D --&gt; E[ผลลัพธ์: F=0, C=100, D=101, A=1100, B=1101, E=111]</code></pre>
+
+<h3 id="ตวอยางโคดฮฟฟแมน-ภาษา-python">ตัวอย่างโค้ดฮัฟฟ์แมน (ภาษา Python)</h3>
+<pre><code class=" language-python">import heapq
+from collections import defaultdict
+
+def huffman_codes(freq):
+    heap = [[weight, [char, &quot;&quot;]] for char, weight in freq.items()]
+    heapq.heapify(heap)
+    
+    while len(heap) &gt; 1:
+        lo = heapq.heappop(heap)
+        hi = heapq.heappop(heap)
+        for pair in lo[1:]:
+            pair[1] = &#x27;0&#x27; + pair[1]
+        for pair in hi[1:]:
+            pair[1] = &#x27;1&#x27; + pair[1]
+        heapq.heappush(heap, [lo[0] + hi[0]] + lo[1:] + hi[1:])
+    
+    return sorted(heapq.heappop(heap)[1:], key=lambda p: (len(p[-1]), p))
+
+
+# การใช้งาน
+freq = {&#x27;A&#x27;: 5, &#x27;B&#x27;: 9, &#x27;C&#x27;: 12, &#x27;D&#x27;: 13, &#x27;E&#x27;: 16, &#x27;F&#x27;: 45}
+codes = huffman_codes(freq)
+print(&quot;ตัวอักษร ความถี่ รหัสฮัฟฟ์แมน&quot;)
+for char, code in codes:
+    print(f&quot;{char} {freq[char]} {code}&quot;)</code></pre>
+
+<p><strong>ผลลัพธ์ตัวอย่าง:</strong></p>
+<pre><code class="">F: 0
+C: 100
+D: 101
+A: 1100
+B: 1101
+E: 111</code></pre>
+
+<hr>
+
+<h3 id="2-อลกอรทมโครสคล-kruskals-algorithm">2. อัลกอริทึมโครสคัล (Kruskal's Algorithm)</h3>
+
+<p>หาต้นไม้ครอบคลุมน้ำหนักน้อยที่สุด (Minimum Spanning Tree, MST) ของกราฟที่มีน้ำหนัก</p>
+
+<p><strong>ขั้นตอน:</strong></p>
+<ol>
+<li>เรียงขอบทั้งหมดตามน้ำหนักจากน้อยไปมาก</li>
+<li>เลือกขอบทีละเส้น ถ้าไม่สร้างวงจรให้เลือกไว้</li>
+<li>ทำซ้ำจนมีขอบ V-1 เส้น (V คือจำนวนจุดยอด)</li>
+</ol>
+
+<p>ใช้ <strong>Union-Find (Disjoint Set)</strong> ในการตรวจสอบวงจร</p>
+
+<h3 id="ตวอยางโคดโครสคล-ภาษา-python">ตัวอย่างโค้ดโครสคัล (ภาษา Python)</h3>
+<pre><code class=" language-python">class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+    
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+    
+    def union(self, x, y):
+        px, py = self.find(x), self.find(y)
+        if px == py:
+            return False
+        self.parent[px] = py
+        return True
+
+
+def kruskal(n, edges):
+    # edges: [(weight, u, v), ...]
+    edges.sort()
+    uf = UnionFind(n)
+    mst = []
+    total_weight = 0
+    
+    for weight, u, v in edges:
+        if uf.union(u, v):
+            mst.append((u, v, weight))
+            total_weight += weight
+    
+    return mst, total_weight
+
+
+# การใช้งาน
+edges = [
+    (1, 0, 1), (4, 0, 2), (3, 1, 2),
+    (2, 1, 3), (5, 2, 3)
+]
+mst, total = kruskal(4, edges)
+print(&quot;MST:&quot;, mst)
+print(&quot;น้ำหนักรวม:&quot;, total)</code></pre>
+
+<hr>
+
+<h3 id="3-อลกอรทมปรมส-prims-algorithm">3. อัลกอริทึมปริมส์ (Prim's Algorithm)</h3>
+
+<p>หา MST เช่นเดียวกับโครสคัล แต่เริ่มจากจุดยอดใดจุดยอดหนึ่งแล้วค่อยๆ ขยายต้นไม้โดยเลือกขอบที่มีน้ำหนักน้อยที่สุดที่เชื่อมจุดในต้นไม้กับจุดนอกต้นไม้</p>
+
+<p><strong>ความแตกต่างจากโครสคัล:</strong></p>
+<ul>
+<li>โครสคัล: เรียงขอบทั้งหมดก่อน แล้วเลือกทีละเส้น</li>
+<li>ปริมส์: เริ่มจากจุดเดียว ขยายออกเรื่อยๆ</li>
+</ul>
+
+<hr>
+
+<h3 id="4-ปญหากระเปาเดนทางแบบทศนยม-fractional-knapsack">4. ปัญหากระเป๋าเดินทางแบบทศนิยม (Fractional Knapsack)</h3>
+
+<p>สามารถหยิบสิ่งของได้บางส่วน (เช่น ทองคำ ผงซักฟอก) อัลกอริทึมเชิงละม่วนเลือกสิ่งของที่มีค่าต่อน้ำหนักสูงสุดก่อน</p>
+
+<p><strong>ตัวอย่าง:</strong></p>
+<ul>
+<li>กระเป๋ารับน้ำหนักได้ 50 กก.</li>
+<li>สิ่งของ A: 60 บาท 10 กก. (ค่า/กก. = 6)</li>
+<li>สิ่งของ B: 100 บาท 20 กก. (ค่า/กก. = 5)</li>
+<li>สิ่งของ C: 120 บาท 30 กก. (ค่า/กก. = 4)</li>
+</ul>
+
+<p>เลือก A ก่อน (เต็ม 10 กก. เหลือ 40 กก.)</p>
+<p>เลือก B ต่อ (เต็ม 20 กก. เหลือ 20 กก.)</p>
+<p>เลือก C บางส่วน (20 กก. จาก 30 กก.)</p>
+
+<p>ค่ารวม = 60 + 100 + (20/30 × 120) = 60 + 100 + 80 = 240 บาท</p>
+
+<hr>
+
+<h2 id="113-ขอจำกดของอลกอรทมเชงละมวน">11.3 ข้อจำกัดของอัลกอริทึมเชิงละม่วน</h2>
+
+<p>อัลกอริทึมเชิงละม่วน <strong>ไม่ได้ให้คำตอบที่ดีที่สุดเสมอไป</strong></p>
+
+<h3 id="ตวอยางทลมเหลว-ปญหากระเปาเดนทางแบบ-01">ตัวอย่างที่ล้มเหลว: ปัญหากระเป๋าเดินทางแบบ 0/1</h3>
+<p>ไม่สามารถหยิบของบางส่วนได้ ต้องหยิบทั้งชิ้นหรือไม่หยิบเลย</p>
+
+<ul>
+<li>กระเป๋ารับน้ำหนักได้ 50 กก.</li>
+<li>สิ่งของ A: 60 บาท 10 กก.</li>
+<li>สิ่งของ B: 100 บาท 20 กก.</li>
+<li>สิ่งของ C: 120 บาท 30 กก.</li>
+</ul>
+
+<p>เชิงละม่วนเลือก A (ค่า/น้ำหนักสูงสุด) แล้ว B แล้ว C บางส่วนไม่ได้ เหลือที่ว่าง 20 กก. ไม่สามารถใส่ C ได้ทั้งชิ้น → ค่ารวม 160 บาท</p>
+
+<p>แต่คำตอบที่ดีที่สุดคือ เลือก B + C = 100 + 120 = 220 บาท (หนัก 50 กก. พอดี)</p>
+
+<hr>
+
+<h2 id="114-การเปรยบเทยบอลกอรทมเชงละมวนกบประเภทอน">11.4 การเปรียบเทียบอัลกอริทึมเชิงละม่วนกับประเภทอื่น</h2>
+
+<table>
+<tr><th>ด้าน</th><th>เชิงละม่วน (Greedy)</th><th>ไดนามิกโปรแกรมมิง</th><th>แบ่งและพิชิต</th></tr>
+<tr><td>การตัดสินใจ</td><td>เลือกทีละขั้นตอนแบบท้องถิ่น</td><td>พิจารณาทุกกรณีย่อยแล้วเลือกดีที่สุด</td><td>แยกปัญหาออกเป็นส่วนย่อย</td></tr>
+<tr><td>ความมั่นใจในคำตอบ</td><td>ไม่มั่นใจเสมอไป</td><td>มั่นใจได้ว่าดีที่สุด</td><td>ขึ้นกับปัญหา</td></tr>
+<tr><td>เวลาทำงาน</td><td>มักเร็วกว่า</td><td>ช้ากว่า (แต่ใช้เมโมไลซ์ได้)</td><td>ขึ้นกับการแบ่ง</td></tr>
+<tr><td>ตัวอย่าง</td><td>ฮัฟฟ์แมน โครสคัล ปริมส์</td><td>ฟีโบนักชี กระเป๋าเดินทาง 0/1</td><td>เมอร์จ์ซอร์ต ควิกซอร์ต</td></tr>
+</table>
+
+<hr>
+
+<h2 id="แบบฝกหด">แบบฝึกหัด</h2>
+
+<h3 id="ขอท-1">ข้อที่ 1</h3>
+<p>จงสร้างต้นไม้ฮัฟฟ์แมนจากความถี่ของตัวอักษรที่กำหนด</p>
+
+<p><strong>คำตอบ:</strong> ตัวอย่างความถี่ A=5, B=9, C=12, D=13, E=16, F=45 ดูในหัวข้อ 11.2</p>
+
+<h3 id="ขอท-2">ข้อที่ 2</h3>
+<p>จงหาต้นไม้ครอบคลุมน้ำหนักน้อยที่สุดโดยใช้อัลกอริทึมโครสคัล</p>
+
+<p><strong>คำตอบ:</strong> ดูโค้ดในหัวข้อ 11.2 ฟังก์ชัน <code>kruskal</code></p>
+
+<h3 id="ขอท-3">ข้อที่ 3</h3>
+<p>จงอธิบายสถานการณ์ที่อัลกอริทึมเชิงละม่วนไม่ให้คำตอบที่ถูกต้องที่สุด</p>
+
+<p><strong>คำตอบ:</strong> ตัวอย่างปัญหากระเป๋าเดินทางแบบ 0/1 ดูในหัวข้อ 11.3</p>
+
+<hr>
+
+<h2 id="แบบปฏบตการขอสอบ">แบบปฏิบัติการข้อสอบ</h2>
+
+<h3 id="ขอควบคมเลอกตอบ-จำนวน-8-ขอ">ข้อควบคุมเลือกตอบ (จำนวน 8 ข้อ)</h3>
+
+<p><strong>ข้อ 1.</strong> อัลกอริทึมเชิงละม่วนเลือกทางเลือกอย่างไรในแต่ละขั้นตอน</p>
+<ul>
+<li>ก. ทางเลือกที่แย่ที่สุดในท้องถิ่น</li>
+<li>ข. ทางเลือกที่ดีที่สุดในท้องถิ่น</li>
+<li>ค. ทางเลือกแบบสุ่ม</li>
+<li>ง. ทางเลือกสุดท้ายในลิสต์</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 2.</strong> ข้อใดไม่ใช่คุณสมบัติที่จำเป็นของอัลกอริทึมเชิงละม่วน</p>
+<ul>
+<li>ก. การเลือกอย่างเหมาะสมในท้องถิ่น</li>
+<li>ข. โครงสร้างทบทวนที่เหมาะสมที่สุด</li>
+<li>ค. การเรียกซ้ำไม่รู้จบ</li>
+<li>ง. การตัดสินใจแบบท้องถิ่น</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<p><strong>ข้อ 3.</strong> อัลกอริทึมฮัฟฟ์แมนใช้สำหรับอะไร</p>
+<ul>
+<li>ก. การเรียงลำดับข้อมูล</li>
+<li>ข. การบีบอัดข้อมูล</li>
+<li>ค. การค้นหาเส้นทางสั้นที่สุด</li>
+<li>ง. การค้นหาข้อความ</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 4.</strong> อัลกอริทึมโครสคัลใช้สำหรับหาอะไร</p>
+<ul>
+<li>ก. เส้นทางที่สั้นที่สุด</li>
+<li>ข. ต้นไม้ครอบคลุมน้ำหนักน้อยที่สุด</li>
+<li>ค. ลำดับส่วนยาวร่วม</li>
+<li>ง. การบีบอัดข้อมูล</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 5.</strong> ปัญหากระเป๋าเดินทางแบบใดที่อัลกอริทึมเชิงละม่วนใช้ได้ผล</p>
+<ul>
+<li>ก. แบบ 0/1 (ต้องหยิบทั้งชิ้น)</li>
+<li>ข. แบบทศนิยม (หยิบบางส่วนได้)</li>
+<li>ค. ทั้งสองแบบ</li>
+<li>ง. ไม่ใช้ได้กับทั้งสองแบบ</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 6.</strong> ข้อใดไม่ใช่อัลกอริทึมเชิงละม่วน</p>
+<ul>
+<li>ก. ฮัฟฟ์แมน</li>
+<li>ข. โครสคัล</li>
+<li>ค. ปริมส์</li>
+<li>ง. เมอร์จ์ซอร์ต</li>
+</ul>
+
+<p><strong>ตอบ: ง</strong></p>
+
+<p><strong>ข้อ 7.</strong> อัลกอริทึมเชิงละม่วนมั่นใจได้หรือไม่ว่าจะได้คำตอบที่ดีที่สุดเสมอ</p>
+<ul>
+<li>ก. มั่นใจได้เสมอ</li>
+<li>ข. ไม่มั่นใจเสมอไป ขึ้นกับปัญหา</li>
+<li>ค. มั่นใจได้เมื่อข้อมูลน้อย</li>
+<li>ง. มั่นใจได้เมื่อข้อมูลมาก</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 8.</strong> ในปัญหากระเป๋าเดินทางแบบทศนิยม สิ่งใดถูกเลือกก่อน</p>
+<ul>
+<li>ก. สิ่งที่มีค่าสูงสุด</li>
+<li>ข. สิ่งที่หนักที่สุด</li>
+<li>ค. สิ่งที่มีอัตราส่วนค่าต่อน้ำหนักสูงสุด</li>
+<li>ง. สิ่งที่เบาที่สุด</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<h3 id="ขอปฏบตการ-จำนวน-2-ขอ">ข้อปฏิบัติการ (จำนวน 2 ข้อ)</h3>
+
+<p><strong>ข้อ 9.</strong> จงเขียนโค้ดภาษา C หรือ Python แก้ปัญหาต้นไม้ครอบคลุมน้ำหนักน้อยที่สุดโดยใช้อัลกอริทึมโครสคัล</p>
+
+<p><strong>ข้อ 10.</strong> จงเขียนโค้ดแก้ปัญหากระเป๋าเดินทางแบบทศนิยมโดยใช้อัลกอริทึมเชิงละม่วน</p>
+
+<hr>
+
+<h2 id="ภาคผนก">ภาคผนก</h2>
+
+<h3 id="ภาคผนก-111-โคดตวอยางอลกอรทมเชงละมวนทกตว">ภาคผนก 11.1 โค้ดตัวอย่างอัลกอริทึมเชิงละม่วนทุกตัว</h3>
+
+<p><strong>ภาษา Java – ปริมส์ (Prim's Algorithm):</strong></p>
+<pre><code class=" language-java">import java.util.*;
+
+public class PrimsAlgorithm {
+    static int[] prim(int[][] graph, int start) {
+        int n = graph.length;
+        int[] key = new int[n];
+        boolean[] inMST = new boolean[n];
+        int[] parent = new int[n];
+        
+        Arrays.fill(key, Integer.MAX_VALUE);
+        Arrays.fill(parent, -1);
+        key[start] = 0;
+        
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;(Comparator.comparingInt(a -&gt; a[1]));
+        pq.offer(new int[]{start, 0});
+        
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int u = curr[0];
+            if (inMST[u]) continue;
+            inMST[u] = true;
+            
+            for (int v = 0; v &lt; n; v++) {
+                if (graph[u][v] != 0 &amp;&amp; !inMST[v] &amp;&amp; graph[u][v] &lt; key[v]) {
+                    key[v] = graph[u][v];
+                    parent[v] = u;
+                    pq.offer(new int[]{v, key[v]});
+                }
+            }
+        }
+        return parent;
+    }
+}</code></pre>
+
+<h3 id="ภาคผนก-112-ตวอยางปญหาทแกไมไดดวยอลกอรทมเชงละมวน">ภาคผนก 11.2 ตัวอย่างปัญหาที่แก้ไม่ได้ด้วยอัลกอริทึมเชิงละม่วน</h3>
+
+<ol>
+<li>ปัญหากระเป๋าเดินทางแบบ 0/1</li>
+<li>ปัญหาหาเส้นทางสั้นที่สุดในกราฟที่มีน้ำหนักลบ</li>
+<li>ปัญหาการจัดตารางงานที่มีข้อจำกัดซับซ้อน</li>
+</ol>
+
+<hr>
+
+<h2 id="อางอง">อ้างอิง</h2>
+
+<ul>
+<li>เอกสารประกอบการสอน บทที่ 11 อัลกอริทึมเชิงละม่วน</li>
+<li>Cormen, T. H., et al. <em>Introduction to Algorithms</em>. Chapters on Greedy Algorithms, MIT Press.</li>
+</ul>
+
+        <div class="chapter-nav">
+          <a href="chapter-10.html" class="nav-btn"><span class="sr-only">ย้อนกลับ</span>← บทก่อนหน้า: 10 การค้นหา (Searching)</a>
+          <a href="chapter-12.html" class="nav-btn">บทถัดไป: 12 ไดนามิกโปรแกรมมิง (Dynamic Programming) <span class="sr-only">ถัดไป</span>→</a>
+        </div>
+      </article>
+    </main>
+  </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-text">&copy; 2026 MaeeYeng — โครงสร้างข้อมูลและอัลกอริทึม. สงวนลิขสิทธิ์ทุกประการ.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('nav-menu');
+      const btn = document.querySelector('.mobile-menu-btn');
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    }
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('nav-menu').classList.remove('open');
+        document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>

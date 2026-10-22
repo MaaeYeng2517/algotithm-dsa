@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>บทที่ 3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</title>
+  <meta name="description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta name="author" content="MaeeYeng">
+  <meta name="keywords" content="โครงสร้างข้อมูล, อัลกอริทึม, DSA, Data Structures, Algorithms, Big O, Sorting, Searching, Graph, Tree, Hash Table, Dynamic Programming, Greedy, Divide and Conquer, C, Python, Java">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://maaeyeng2517.github.io/algotithm-dsa/chapter-03.html">
+  <link rel="stylesheet" href="style.css">
+  <!-- Open Graph -->
+  <meta property="og:title" content="บทที่ 3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maaeyeng2517.github.io/algotithm-dsa/chapter-03.html">
+  
+  <meta property="og:site_name" content="DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:locale" content="th_TH">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="บทที่ 3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta name="twitter:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'base', securityLevel: 'loose' });</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">DSA</div>
+        <span>DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</span>
+      </a>
+      <button class="mobile-menu-btn" aria-label="เปิดเมนูนำทาง" aria-expanded="false" onclick="toggleMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="chapter-01.html">1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+        <li><a href="chapter-02.html">2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+        <li><a href="chapter-03.html" class="active">3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+        <li><a href="chapter-04.html">4 สแตกและคิว (Stack and Queue)</a></li>
+        <li><a href="chapter-05.html">5 ลิงก์ลิสต์ (Linked List)</a></li>
+        <li><a href="chapter-06.html">6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+        <li><a href="chapter-07.html">7 ตารางแฮช (Hash Table)</a></li>
+        <li><a href="chapter-08.html">8 กราฟ (Graph)</a></li>
+        <li><a href="chapter-09.html">9 การเรียงลำดับ (Sorting)</a></li>
+        <li><a href="chapter-10.html">10 การค้นหา (Searching)</a></li>
+        <li><a href="chapter-11.html">11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+        <li><a href="chapter-12.html">12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+        <li><a href="chapter-13.html">13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+        <li><a href="chapter-14.html">14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+        <li><a href="chapter-15.html">15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+
+  <nav class="breadcrumb">
+    <a href="index.html">หน้าแรก</a>
+    <span>›</span>
+    <span>บทที่ 3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</span>
+  </nav>
+
+  <div class="content-grid">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h3>สารบัญบทเรียน<span class="badge">15 บท</span></h3>
+        <ul class="chapter-list">
+    <li><a href="chapter-01.html"><span class="chapter-number">01</span>1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+    <li><a href="chapter-02.html"><span class="chapter-number">02</span>2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+    <li><a href="chapter-03.html" class="active"><span class="chapter-number">03</span>3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+    <li><a href="chapter-04.html"><span class="chapter-number">04</span>4 สแตกและคิว (Stack and Queue)</a></li>
+    <li><a href="chapter-05.html"><span class="chapter-number">05</span>5 ลิงก์ลิสต์ (Linked List)</a></li>
+    <li><a href="chapter-06.html"><span class="chapter-number">06</span>6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+    <li><a href="chapter-07.html"><span class="chapter-number">07</span>7 ตารางแฮช (Hash Table)</a></li>
+    <li><a href="chapter-08.html"><span class="chapter-number">08</span>8 กราฟ (Graph)</a></li>
+    <li><a href="chapter-09.html"><span class="chapter-number">09</span>9 การเรียงลำดับ (Sorting)</a></li>
+    <li><a href="chapter-10.html"><span class="chapter-number">10</span>10 การค้นหา (Searching)</a></li>
+    <li><a href="chapter-11.html"><span class="chapter-number">11</span>11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+    <li><a href="chapter-12.html"><span class="chapter-number">12</span>12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+    <li><a href="chapter-13.html"><span class="chapter-number">13</span>13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+    <li><a href="chapter-14.html"><span class="chapter-number">14</span>14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+    <li><a href="chapter-15.html"><span class="chapter-number">15</span>15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content-area" id="main-content">
+      <article>
+        <div class="article-meta">
+          <span class="meta-item"><strong>บทเรียน:</strong> บทที่ 3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</span>
+          <span class="meta-item"><strong>หมวด:</strong> โครงสร้างข้อมูลและอัลกอริทึม</span>
+          <span class="meta-item"><strong>ภาษา:</strong> ไทย / English</span>
+        </div>
+        <h1>บทที่ 3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</h1>
+        
+<h2 id="วตถประสงคการเรยนร">วัตถุประสงค์การเรียนรู้</h2>
+<p>เมื่อเรียนจบบทนี้ นักศึกษาจะสามารถ</p>
+<ol>
+<li>อธิบายโครงสร้างและการทำงานของอาเรย์แบบหนึ่งมิติและสองมิติ</li>
+<li>อธิบายลิสต์เชิงเส้นและการดำเนินการพื้นฐาน (แทรก ลบ ค้นหา ทบทวน)</li>
+<li>เปรียบเทียบอาเรย์กับลิสต์เชิงเส้นในด้านข้อดีข้อเสีย</li>
+<li>เลือกใช้โครงสร้างข้อมูลที่เหมาะสมกับปัญหาที่กำหนด</li>
+<li>เขียนโปรแกรมจัดการอาเรย์และลิสต์เชิงเส้นได้อย่างถูกต้อง</li>
+</ol>
+
+<h2 id="การประเมน">การประเมิน</h2>
+<table>
+<tr><th>รายการ</th><th>น้ำหนัก</th><th>หมายเหตุ</th></tr>
+<tr><td>งานเขียนโปรแกรมจัดการอาเรย์และลิสต์</td><td>15%</td><td>โค้ดภาษา C/Python/Java</td></tr>
+<tr><td>แบบทดสอบท้ายบท</td><td>10%</td><td>ข้อควบคุมเลือกตอบและปฏิบัติการ</td></tr>
+<tr><td>การปฏิบัติงานในห้องปฏิบัติการคอมพิวเตอร์</td><td>10%</td><td>ฝึกเขียนโค้ดจริงในห้องแล็บ</td></tr>
+</table>
+
+<hr>
+
+<h2 id="31-อาเรยแบบหนงมตและสองมต">3.1 อาเรย์แบบหนึ่งมิติและสองมิติ</h2>
+
+<h3 id="อาเรยแบบหนงมต-1d-array">อาเรย์แบบหนึ่งมิติ (1D Array)</h3>
+<p>อาเรย์คือกลุ่มข้อมูลชนิดเดียวกันที่จัดเก็บในตำแหน่งหน่วยความจำติดต่อกัน แต่ละตัวมีดัชนี (index) เริ่มจาก 0</p>
+
+<pre><code class="">อาเรย์:  [10] [20] [30] [40] [50]
+ดัชนี:   0    1    2    3    4</code></pre>
+
+<p><strong>คุณสมบัติ:</strong></p>
+<ul>
+<li>ขนาดคงที่เมื่อประกาศแล้ว (ในภาษา C/Java)</li>
+<li>เข้าถึงสมาชิกได้โดยตรงผ่านดัชนี O(1)</li>
+<li>องค์ประกอบทุกตัวต้องเป็นชนิดข้อมูลเดียวกัน</li>
+</ul>
+
+<h3 id="อาเรยแบบสองมต-2d-array">อาเรย์แบบสองมิติ (2D Array)</h3>
+<p>เปรียบเสมือนตาราง แถวและคอลัมน์</p>
+
+<pre><code class="">        คอลัมน์ 0   1   2
+แถว 0  [10]  [20]  [30]
+แถว 1  [40]  [50]  [60]
+แถว 2  [70]  [80]  [90]</code></pre>
+
+<p>การเข้าถึง: <code>matrix[แถว][คอลัมน์]</code> เช่น <code>matrix[1][2] = 60</code></p>
+
+<hr>
+
+<h2 id="32-การจดเกบอาเรยในหนวยความจำ">3.2 การจัดเก็บอาเรย์ในหน่วยความจำ</h2>
+
+<p>อาเรย์ถูกจัดเก็บแบบ <strong>ติดต่อกัน (contiguous)</strong> ในหน่วยความจำ</p>
+
+<h3 id="การคำนวณทอยหนวยความจำ">การคำนวณที่อยู่หน่วยความจำ</h3>
+<p>สำหรับอาเรย์หนึ่งมิติ:</p>
+<pre><code class="">ที่อยู่ของ A[i] = ที่อยู่_base + (i × ขนาดของแต่ละองค์ประกอบ)</code></pre>
+
+<p>ตัวอย่าง: int ขนาด 4 ไบต์, base address = 1000</p>
+<ul>
+<li>A[0] อยู่ที่ 1000</li>
+<li>A[1] อยู่ที่ 1004</li>
+<li>A[2] อยู่ที่ 1008</li>
+<li>A[5] อยู่ที่ 1020</li>
+</ul>
+
+<h3 id="ภาพประกอบหนวยความจำ">ภาพประกอบหน่วยความจำ</h3>
+
+<pre><code class="">ที่อยู่:  1000   1004   1008   1012   1016
+ค่า:     [10]   [20]   [30]   [40]   [50]
+ดัชนี:    0      1      2      3      4</code></pre>
+
+<hr>
+
+<h2 id="33-การดำเนนการกบอาเรย">3.3 การดำเนินการกับอาเรย์</h2>
+
+<h3 id="การอาน-access">การอ่าน (Access)</h3>
+<p>เข้าถึงสมาชิกโดยตรงผ่านดัชนี → <strong>O(1)</strong></p>
+
+<h3 id="การคนหา-search">การค้นหา (Search)</h3>
+<p>ค้นหาโดยไม่รู้ดัชนี ต้องไล่ตั้งแต่ตัวแรก → <strong>O(n)</strong></p>
+
+<h3 id="การแทรก-insert">การแทรก (Insert)</h3>
+<p>ถ้าแทรกท้ายและมีที่ว่าง → O(1)</p>
+<p>ถ้าแทรกกลางหรือต้นต้องขยับสมาชิก → <strong>O(n)</strong></p>
+
+<h3 id="การลบ-delete">การลบ (Delete)</h3>
+<p>ลบท้าย → O(1)</p>
+<p>ลบกลางหรือต้นต้องขยับสมาชิกมาทับ → <strong>O(n)</strong></p>
+
+<h3 id="ตวอยางโคดภาษา-python">ตัวอย่างโค้ดภาษา Python</h3>
+<pre><code class=" language-python"># การสร้างและเข้าถึงอาเรย์
+arr = [10, 20, 30, 40, 50]
+
+# อ่าน
+print(arr[2])  # 30
+
+# แทรกท้าย
+arr.append(60)  # [10, 20, 30, 40, 50, 60]
+
+# แทรกกลาง (ตำแหน่งที่ 2)
+arr.insert(2, 25)  # [10, 20, 25, 30, 40, 50, 60]
+
+# ลบสมาชิก
+arr.remove(30)  # [10, 20, 25, 40, 50, 60]
+
+# ลบโดยดัชนี
+arr.pop(0)  # [20, 25, 40, 50, 60]</code></pre>
+
+<h3 id="ตวอยางโคดภาษา-c">ตัวอย่างโค้ดภาษา C</h3>
+<pre><code class=" language-c">#include &lt;stdio.h&gt;
+
+void print_array(int arr[], int n) {
+    for (int i = 0; i &lt; n; i++) {
+        printf(&quot;%d &quot;, arr[i]);
+    }
+    printf(&quot;\n&quot;);
+}
+
+// แทรกสมาชิกที่ตำแหน่ง pos (ต้องมีที่ว่างในอาเรย์)
+void insert(int arr[], int *n, int value, int pos) {
+    // ขยับสมาชิกจากด้านท้ายมาหน้า
+    for (int i = *n; i &gt; pos; i--) {
+        arr[i] = arr[i - 1];
+    }
+    arr[pos] = value;
+    (*n)++;
+}
+
+// ลบสมาชิกที่ตำแหน่ง pos
+void delete(int arr[], int *n, int pos) {
+    for (int i = pos; i &lt; *n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    (*n)--;
+}
+
+int main() {
+    int arr[10] = {10, 20, 30, 40, 50};
+    int n = 5;
+    
+    printf(&quot;ก่อนแทรก: &quot;);
+    print_array(arr, n);
+    
+    insert(arr, &amp;n, 25, 2);
+    printf(&quot;หลังแทรก 25 ที่ตำแหน่ง 2: &quot;);
+    print_array(arr, n);
+    
+    delete(arr, &amp;n, 3);
+    printf(&quot;หลังลบตำแหน่ง 3: &quot;);
+    print_array(arr, n);
+    
+    return 0;
+}</code></pre>
+
+<hr>
+
+<h2 id="34-ลสตเชงเสน-linear-list">3.4 ลิสต์เชิงเส้น (Linear List)</h2>
+
+<p>ลิสต์เชิงเส้นคือกลุ่มสมาชิกที่จัดเรียงเป็นลำดับ โดยสมาชิกแต่ละตัว (ยกเว้นตัวแรกและตัวสุดท้าย) มีสมาชิกก่อนและหลัง exatamente หนึ่งตัว</p>
+
+<h3 id="การแทนลสตเชงเสน">การแทนลิสต์เชิงเส้น</h3>
+<ol>
+<li><strong>โดยใช้อาเรย์</strong> – จัดเก็บติดต่อกันในหน่วยความจำ</li>
+<li><strong>โดยใช้การเชื่อมโยง (Linked List)</strong> – แต่ละตัวชี้ไปยังตัวถัดไป</li>
+</ol>
+
+<hr>
+
+<h2 id="35-การดำเนนการกบลสตเชงเสน">3.5 การดำเนินการกับลิสต์เชิงเส้น</h2>
+
+<table>
+<tr><th>การดำเนินการ</th><th>คำอธิบาย</th></tr>
+<tr><td>สร้าง (Create)</td><td>สร้างลิสต์ว่าง</td></tr>
+<tr><td>แทรก (Insert)</td><td>เพิ่มสมาชิกใหม่เข้าไปในลิสต์</td></tr>
+<tr><td>ลบ (Delete)</td><td>นำสมาชิกออกจากลิสต์</td></tr>
+<tr><td>ค้นหา (Search)</td><td>หาตำแหน่งของสมาชิก</td></tr>
+<tr><td>ทบทวน (Traverse)</td><td>ไล่ดูสมาชิกทุกตัวตั้งแต่ต้นถึงท้าย</td></tr>
+<tr><td>แก้ไข (Update)</td><td>เปลี่ยนค่าของสมาชิก</td></tr>
+</table>
+
+<hr>
+
+<h2 id="36-ความแตกตางระหวางอาเรยกบลสตเชงเสน">3.6 ความแตกต่างระหว่างอาเรย์กับลิสต์เชิงเส้น</h2>
+
+<table>
+<tr><th>ด้าน</th><th>อาเรย์ (Array)</th><th>ลิสต์เชิงเส้น (Linear List/Linked List)</th></tr>
+<tr><td>การจัดเก็บ</td><td>ติดต่อกันในหน่วยความจำ</td><td>อาจกระจาย ตัวละชี้ไปตัวถัดไป</td></tr>
+<tr><td>การเข้าถึง</td><td>โดยตรงผ่านดัชนี O(1)</td><td>ต้องไล่จากหัว O(n)</td></tr>
+<tr><td>การแทรก/ลบ</td><td>ช้าเมื่อแทรกกลาง ต้องขยับสมาชิก</td><td>เร็ว แค่เปลี่ยนตัวชี้</td></tr>
+<tr><td>ขนาด</td><td>คงที่ (บางภาษา)</td><td>ยืดหยุ่น เพิ่มลดได้ตลอด</td></tr>
+<tr><td>หน่วยความจำ</td><td>ประหยัด (ไม่มีตัวชี้เพิ่ม)</td><td>เปลืองกว่า (ต้องเก็บตัวชี้)</td></tr>
+</table>
+
+<pre><code class=" language-mermaid">graph LR
+    subgraph Array[อาเรย์]
+        A1[[10]] --&gt; A2[[20]] --&gt; A3[[30]]
+    end
+    subgraph LinkedList[ลิงก์ลิสต์]
+        L1([10]) --&gt;|next| L2([20]) --&gt;|next| L3([30])
+    end</code></pre>
+
+<hr>
+
+<h2 id="37-การประยกตใชงานจรง">3.7 การประยุกต์ใช้งานจริง</h2>
+
+<ul>
+<li>รายชื่อนักศึกษาในชั้นเรียน</li>
+<li>รายการสินค้าในตะกร้าสินค้า</li>
+<li>播放รายการเพลง (playlist)</li>
+<li>ประวัติการท่องเว็บ (browser history)</li>
+</ul>
+
+<hr>
+
+<h2 id="แบบฝกหด">แบบฝึกหัด</h2>
+
+<h3 id="ขอท-1">ข้อที่ 1</h3>
+<p>จงเขียนอัลกอริทึมแทรกสมาชิกลงในอาเรย์ที่เรียงลำดับแล้ว โดยยังคงเรียงลำดับไว้</p>
+
+<p><strong>แนวทางคำตอบ (ภาษาเทียม):</strong></p>
+<pre><code class="">อัลกอริทึม แทรกในอาเรย์เรียงลำดับ
+อินพุต: A[1..N] (เรียงลำดับแล้ว), x (ค่าที่จะแทรก)
+เอาต์พุต: A ที่แทรก x แล้วยังเรียงลำดับอยู่
+
+1. หาตำแหน่ง pos ที่ x ควรแทรก (ตัวแรกที่มากกว่า x)
+2. ขยับสมาชิกจากตำแหน่ง N ถึง pos มาหน้าหนึ่งตำแหน่ง
+3. แทรก x ที่ตำแหน่ง pos
+4. N = N + 1</code></pre>
+
+<h3 id="ขอท-2">ข้อที่ 2</h3>
+<p>จงเขียนอัลกอริทึมลบสมาชิกออกจากลิสต์เชิงเส้น</p>
+
+<p><strong>แนวทางคำตอบ:</strong></p>
+<pre><code class="">อัลกอริทึม ลบสมาชิกลิสต์เชิงเส้น
+อินพุต: ลิสต์ L, ค่า x ที่ต้องการลบ
+เอาต์พุต: ลิสต์ L ที่ลบ x แล้ว
+
+1. ค้นหาตำแหน่ง pos ของ x ในลิสต์
+2. ถ้าไม่พบ x ให้จบการทำงาน
+3. ขยับสมาชิกหลัง pos มาหน้าหนึ่งตำแหน่ง
+4. ลดขนาดลิสต์ลง 1</code></pre>
+
+<h3 id="ขอท-3">ข้อที่ 3</h3>
+<p>จงเปรียบเทียบเวลาการเข้าถึงสมาชิกของอาเรย์กับลิสต์เชิงเส้น</p>
+
+<p><strong>คำตอบ:</strong></p>
+<ul>
+<li>อาเรย์: เข้าถึงโดยตรงผ่านดัชนี → <strong>O(1)</strong></li>
+<li>ลิสต์เชิงเส้น (เชิงเดียว): ต้องไล่จากหัวลิสต์จนกว่าจะถึงตำแหน่ง → <strong>O(n)</strong></li>
+</ul>
+
+<hr>
+
+<h2 id="แบบปฏบตการขอสอบ">แบบปฏิบัติการข้อสอบ</h2>
+
+<h3 id="ขอควบคมเลอกตอบ-จำนวน-8-ขอ">ข้อควบคุมเลือกตอบ (จำนวน 8 ข้อ)</h3>
+
+<p><strong>ข้อ 1.</strong> อาเรย์เข้าถึงสมาชิกโดยใช้สิ่งใด</p>
+<ul>
+<li>ก. ตัวชี้</li>
+<li>ข. ดัชนี (index)</li>
+<li>ค. คีย์ (key)</li>
+<li>ง. ค่าคงที่</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 2.</strong> การแทรกสมาชิกกลางอาเรย์มีความซับซ้อนเท่าใด</p>
+<ul>
+<li>ก. O(1)</li>
+<li>ข. O(n)</li>
+<li>ค. O(log n)</li>
+<li>ง. O(n log n)</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 3.</strong> ข้อใดไม่ใช่คุณสมบัติของอาเรย์</p>
+<ul>
+<li>ก. องค์ประกอบชนิดเดียวกัน</li>
+<li>ข. จัดเก็บติดต่อกันในหน่วยความจำ</li>
+<li>ค. ขนาดเปลี่ยนแปลงได้ตลอดเวลา</li>
+<li>ง. เข้าถึงโดยตรงผ่านดัชนี</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<p><strong>ข้อ 4.</strong> การลบสมาชิกท้ายอาเรย์มีความซับซ้อนเท่าใด</p>
+<ul>
+<li>ก. O(1)</li>
+<li>ข. O(n)</li>
+<li>ค. O(log n)</li>
+<li>ง. O(n²)</li>
+</ul>
+
+<p><strong>ตอบ: ก</strong></p>
+
+<p><strong>ข้อ 5.</strong> ลิสต์เชิงเส้นแตกต่างจากอาเรย์ตรงที่</p>
+<ul>
+<li>ก. ลิสต์เข้าถึงโดยตรงเร็วกว่า</li>
+<li>ข. ลิสต์ต้องจัดเก็บติดต่อกัน</li>
+<li>ค. ลิสต์แทรกลบง่ายกว่าเมื่ออยู่กลาง</li>
+<li>ง. ลิสต์ขนาดคงที่</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<p><strong>ข้อ 6.</strong> อาเรย์สองมิติเปรียบเสมือนสิ่งใด</p>
+<ul>
+<li>ก. รายชื่อเส้นตรง</li>
+<li>ข. ตารางแถวและคอลัมน์</li>
+<li>ค. ต้นไม้</li>
+<li>ง. กราฟ</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 7.</strong> การทบทวนสมาชิกทุกตัวในลิสต์เชิงเส้นเรียกว่า</p>
+<ul>
+<li>ก. การค้นหา</li>
+<li>ข. การแทรก</li>
+<li>ค. การทบทวน (traverse)</li>
+<li>ง. การลบ</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<p><strong>ข้อ 8.</strong> อาเรย์ที่มีสมาชิก 100 ตัว ดัชนีตัวสุดท้ายคือเท่าใด (เริ่มนับจาก 0)</p>
+<ul>
+<li>ก. 100</li>
+<li>ข. 99</li>
+<li>ค. 101</li>
+<li>ง. 98</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<h3 id="ขอปฏบตการ-จำนวน-2-ขอ">ข้อปฏิบัติการ (จำนวน 2 ข้อ)</h3>
+
+<p><strong>ข้อ 9.</strong> จงเขียนโค้ดภาษา C หรือ Python จัดการอาเรย์ ประกอบด้วยการสร้าง อ่าน แทรก ลบ และค้นหาสมาชิก</p>
+
+<p><strong>ข้อ 10.</strong> จงเขียนโค้ดจัดการลิสต์เชิงเส้นโดยใช้โครงสร้างลิงก์ลิสต์ รองรับการแทรกและลบสมาชิก</p>
+
+<hr>
+
+<h2 id="ภาคผนก">ภาคผนก</h2>
+
+<h3 id="ภาคผนก-31-ตวอยางโคดอาเรยและลสตเชงเสนภาษา-c--python--java">ภาคผนก 3.1 ตัวอย่างโค้ดอาเรย์และลิสต์เชิงเส้นภาษา C / Python / Java</h3>
+
+<p><strong>ภาษา Java – คลาสจัดการอาเรย์:</strong></p>
+<pre><code class=" language-java">public class ArrayManager {
+    private int[] arr;
+    private int size;
+    
+    public ArrayManager(int capacity) {
+        arr = new int[capacity];
+        size = 0;
+    }
+    
+    public void insert(int value, int pos) {
+        for (int i = size; i &gt; pos; i--) {
+            arr[i] = arr[i - 1];
+        }
+        arr[pos] = value;
+        size++;
+    }
+    
+    public void delete(int pos) {
+        for (int i = pos; i &lt; size - 1; i++) {
+            arr[i] = arr[i + 1];
+        }
+        size--;
+    }
+    
+    public int get(int pos) {
+        return arr[pos];
+    }
+}</code></pre>
+
+<h3 id="ภาคผนก-32-แบบฝกหดเขยนโปรแกรมเพมเตม">ภาคผนก 3.2 แบบฝึกหัดเขียนโปรแกรมเพิ่มเติม</h3>
+
+<ol>
+<li>เขียนโปรแกรมหาค่ามากที่สุดและน้อยที่สุดในอาเรย์</li>
+<li>เขียนโปรแกรมย้อนกลับอาเรย์ (reverse array)</li>
+<li>เขียนโปรแกรมลบค่าซ้ำออกจากอาเรย์</li>
+<li>เขียนโปรแกรมรวมอาเรย์สองอันที่เรียงลำดับแล้วให้ยังเรียงลำดับอยู่</li>
+</ol>
+
+<hr>
+
+<h2 id="อางอง">อ้างอิง</h2>
+
+<ul>
+<li>คู่มือการใช้ภาษาโปรแกรมประกอบการสอน รายวิชาโครงสร้างข้อมูล</li>
+<li>เอกสารประกอบการสอน บทที่ 3 อาเรย์และลิสต์เชิงเส้น</li>
+</ul>
+
+        <div class="chapter-nav">
+          <a href="chapter-02.html" class="nav-btn"><span class="sr-only">ย้อนกลับ</span>← บทก่อนหน้า: 2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a>
+          <a href="chapter-04.html" class="nav-btn">บทถัดไป: 4 สแตกและคิว (Stack and Queue) <span class="sr-only">ถัดไป</span>→</a>
+        </div>
+      </article>
+    </main>
+  </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-text">&copy; 2026 MaeeYeng — โครงสร้างข้อมูลและอัลกอริทึม. สงวนลิขสิทธิ์ทุกประการ.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('nav-menu');
+      const btn = document.querySelector('.mobile-menu-btn');
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    }
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('nav-menu').classList.remove('open');
+        document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>

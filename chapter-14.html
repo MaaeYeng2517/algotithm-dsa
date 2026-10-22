@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>บทที่ 14 อัลกอริทึมสตริง (String Algorithm) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</title>
+  <meta name="description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta name="author" content="MaeeYeng">
+  <meta name="keywords" content="โครงสร้างข้อมูล, อัลกอริทึม, DSA, Data Structures, Algorithms, Big O, Sorting, Searching, Graph, Tree, Hash Table, Dynamic Programming, Greedy, Divide and Conquer, C, Python, Java">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://maaeyeng2517.github.io/algotithm-dsa/chapter-14.html">
+  <link rel="stylesheet" href="style.css">
+  <!-- Open Graph -->
+  <meta property="og:title" content="บทที่ 14 อัลกอริทึมสตริง (String Algorithm) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maaeyeng2517.github.io/algotithm-dsa/chapter-14.html">
+  
+  <meta property="og:site_name" content="DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:locale" content="th_TH">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="บทที่ 14 อัลกอริทึมสตริง (String Algorithm) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta name="twitter:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'base', securityLevel: 'loose' });</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">DSA</div>
+        <span>DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</span>
+      </a>
+      <button class="mobile-menu-btn" aria-label="เปิดเมนูนำทาง" aria-expanded="false" onclick="toggleMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="chapter-01.html">1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+        <li><a href="chapter-02.html">2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+        <li><a href="chapter-03.html">3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+        <li><a href="chapter-04.html">4 สแตกและคิว (Stack and Queue)</a></li>
+        <li><a href="chapter-05.html">5 ลิงก์ลิสต์ (Linked List)</a></li>
+        <li><a href="chapter-06.html">6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+        <li><a href="chapter-07.html">7 ตารางแฮช (Hash Table)</a></li>
+        <li><a href="chapter-08.html">8 กราฟ (Graph)</a></li>
+        <li><a href="chapter-09.html">9 การเรียงลำดับ (Sorting)</a></li>
+        <li><a href="chapter-10.html">10 การค้นหา (Searching)</a></li>
+        <li><a href="chapter-11.html">11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+        <li><a href="chapter-12.html">12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+        <li><a href="chapter-13.html">13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+        <li><a href="chapter-14.html" class="active">14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+        <li><a href="chapter-15.html">15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+
+  <nav class="breadcrumb">
+    <a href="index.html">หน้าแรก</a>
+    <span>›</span>
+    <span>บทที่ 14 อัลกอริทึมสตริง (String Algorithm)</span>
+  </nav>
+
+  <div class="content-grid">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h3>สารบัญบทเรียน<span class="badge">15 บท</span></h3>
+        <ul class="chapter-list">
+    <li><a href="chapter-01.html"><span class="chapter-number">01</span>1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+    <li><a href="chapter-02.html"><span class="chapter-number">02</span>2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+    <li><a href="chapter-03.html"><span class="chapter-number">03</span>3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+    <li><a href="chapter-04.html"><span class="chapter-number">04</span>4 สแตกและคิว (Stack and Queue)</a></li>
+    <li><a href="chapter-05.html"><span class="chapter-number">05</span>5 ลิงก์ลิสต์ (Linked List)</a></li>
+    <li><a href="chapter-06.html"><span class="chapter-number">06</span>6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+    <li><a href="chapter-07.html"><span class="chapter-number">07</span>7 ตารางแฮช (Hash Table)</a></li>
+    <li><a href="chapter-08.html"><span class="chapter-number">08</span>8 กราฟ (Graph)</a></li>
+    <li><a href="chapter-09.html"><span class="chapter-number">09</span>9 การเรียงลำดับ (Sorting)</a></li>
+    <li><a href="chapter-10.html"><span class="chapter-number">10</span>10 การค้นหา (Searching)</a></li>
+    <li><a href="chapter-11.html"><span class="chapter-number">11</span>11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+    <li><a href="chapter-12.html"><span class="chapter-number">12</span>12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+    <li><a href="chapter-13.html"><span class="chapter-number">13</span>13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+    <li><a href="chapter-14.html" class="active"><span class="chapter-number">14</span>14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+    <li><a href="chapter-15.html"><span class="chapter-number">15</span>15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content-area" id="main-content">
+      <article>
+        <div class="article-meta">
+          <span class="meta-item"><strong>บทเรียน:</strong> บทที่ 14 อัลกอริทึมสตริง (String Algorithm)</span>
+          <span class="meta-item"><strong>หมวด:</strong> โครงสร้างข้อมูลและอัลกอริทึม</span>
+          <span class="meta-item"><strong>ภาษา:</strong> ไทย / English</span>
+        </div>
+        <h1>บทที่ 14 อัลกอริทึมสตริง (String Algorithm)</h1>
+        
+<h2 id="วตถประสงคการเรยนร">วัตถุประสงค์การเรียนรู้</h2>
+<p>เมื่อเรียนจบบทนี้ นักศึกษาจะสามารถ</p>
+<ol>
+<li>อธิบายอัลกอริทึมค้นหาข้อความแบบเบื้องต้น (Brute Force)</li>
+<li>อธิบายอัลกอริทึมค้นหาข้อความขั้นสูง เช่น KMP, Boyer-Moore, Rabin-Karp</li>
+<li>อธิบายโครงสร้างข้อมูลสำหรับสตริง เช่น ทรีอา (Trie), ทรีอาหลัง (Suffix Tree)</li>
+<li>เปรียบเทียบประสิทธิภาพของอัลกอริทึมค้นหาข้อความแต่ละชนิด</li>
+<li>เขียนโปรแกรมค้นหาและจัดการข้อความได้อย่างถูกต้อง</li>
+</ol>
+
+<h2 id="การประเมน">การประเมิน</h2>
+<table>
+<tr><th>รายการ</th><th>น้ำหนัก</th><th>หมายเหตุ</th></tr>
+<tr><td>งานเขียนโปรแกรมค้นหาข้อความ</td><td>15%</td><td>โค้ดภาษา C/Python/Java</td></tr>
+<tr><td>แบบทดสอบท้ายบท</td><td>10%</td><td>ข้อควบคุมเลือกตอบและปฏิบัติการ</td></tr>
+<tr><td>การเข้าร่วมกิจกรรมเปรียบเทียบอัลกอริทึมค้นหาข้อความ</td><td>5%</td><td>กิจกรรมกลุ่ม</td></tr>
+</table>
+
+<hr>
+
+<h2 id="141-อลกอรทมคนหาขอความแบบเบองตน-brute-force">14.1 อัลกอริทึมค้นหาข้อความแบบเบื้องต้น (Brute Force)</h2>
+
+<h3 id="แนวคด">แนวคิด</h3>
+<p>เปรียบเทียบรูปแบบ (pattern) กับข้อความ (text) ทีละตำแหน่ง ตั้งแต่ตำแหน่งแรกจนถึงตำแหน่งสุดท้ายที่เป็นไปได้</p>
+
+<pre><code class=" language-mermaid">graph LR
+    subgraph Text[ข้อความ: A B A B A C]
+    direction LR
+    T1[[A]] --&gt; T2[[B]] --&gt; T3[[A]] --&gt; T4[[B]] --&gt; T5[[A]] --&gt; T6[[C]]
+    end
+    
+    subgraph Pattern[รูปแบบ: A B A]
+    direction LR
+    P1[[A]] --&gt; P2[[B]] --&gt; P3[[A]]
+    end
+    
+    Text -.-&gt;|เปรียบเทียบตำแหน่ง 0| Pattern
+    Text -.-&gt;|เปรียบเทียบตำแหน่ง 1| Pattern
+    Text -.-&gt;|เปรียบเทียบตำแหน่ง 2| Pattern</code></pre>
+
+<h3 id="ตวอยางโคด-ภาษา-python">ตัวอย่างโค้ด (ภาษา Python)</h3>
+<pre><code class=" language-python">def brute_force_search(text, pattern):
+    n = len(text)
+    m = len(pattern)
+    
+    for i in range(n - m + 1):
+        match = True
+        for j in range(m):
+            if text[i + j] != pattern[j]:
+                match = False
+                break
+        if match:
+            return i  # พบที่ดัชนี i
+    
+    return -1  # ไม่พบ
+
+
+# การใช้งาน
+text = &quot;ABABAC&quot;
+pattern = &quot;ABA&quot;
+print(brute_force_search(text, pattern))  # 0 (พบที่ตำแหน่ง 0)</code></pre>
+
+<p>ความซับซ้อน: Best O(n), Worst O(n × m)</p>
+
+<hr>
+
+<h2 id="142-อลกอรทมคนหาขอความของ-knut-morris-pratt-kmp">14.2 อัลกอริทึมค้นหาข้อความของ Knut-Morris-Pratt (KMP)</h2>
+
+<h3 id="แนวคด">แนวคิด</h3>
+<p>เมื่อเกิดการไม่ตรงกัน KMP จะไม่ย้อนกลับในข้อความ แต่ใช้ข้อมูลจากรูปแบบเองเพื่อข้ามไปข้างหน้า โดยสร้างตาราง "prefix function" (failure function) ล่วงหน้า</p>
+
+<pre><code class=" language-mermaid">graph LR
+    subgraph KMP[KMP - ไม่ย้อนกลับในข้อความ]
+    direction LR
+    T[ข้อความ: A B A B A C] --&gt;|ไม่ตรงที่นี่| P[รูปแบบ: A B A]
+    P --&gt;|ข้ามไปตาม prefix function| P2[เริ่มเปรียบเทียบใหม่ที่ตำแหน่งที่เหมาะสม]
+    end</code></pre>
+
+<h3 id="ตวอยางโคด-ภาษา-python">ตัวอย่างโค้ด (ภาษา Python)</h3>
+<pre><code class=" language-python">def compute_lps(pattern):
+    &quot;&quot;&quot;สร้างตาราง longest proper prefix which is also suffix&quot;&quot;&quot;
+    m = len(pattern)
+    lps = [0] * m
+    length = 0
+    i = 1
+    
+    while i &lt; m:
+        if pattern[i] == pattern[length]:
+            length += 1
+            lps[i] = length
+            i += 1
+        else:
+            if length != 0:
+                length = lps[length - 1]
+            else:
+                lps[i] = 0
+                i += 1
+    return lps
+
+
+def kmp_search(text, pattern):
+    n = len(text)
+    m = len(pattern)
+    lps = compute_lps(pattern)
+    
+    i = j = 0
+    while i &lt; n:
+        if pattern[j] == text[i]:
+            i += 1
+            j += 1
+        
+        if j == m:
+            return i - j  # พบที่ดัชนี i-j
+            j = lps[j - 1]
+        elif i &lt; n and pattern[j] != text[i]:
+            if j != 0:
+                j = lps[j - 1]
+            else:
+                i += 1
+    
+    return -1
+
+
+# การใช้งาน
+text = &quot;ABABAC&quot;
+pattern = &quot;ABA&quot;
+print(kmp_search(text, pattern))  # 0</code></pre>
+
+<p>ความซับซ้อน: O(n + m) สร้างลפס O(m) ค้นหา O(n)</p>
+
+<hr>
+
+<h2 id="143-อลกอรทมคนหาขอความของ-boyer-moore">14.3 อัลกอริทึมค้นหาข้อความของ Boyer-Moore</h2>
+
+<h3 id="แนวคด">แนวคิด</h3>
+<p>เปรียบเทียบจากท้ายรูปแบบไปหาหัว เมื่อพบตัวอักษรที่ไม่ตรงกัน จะข้มไปหลายตำแหน่งในครั้งเดียว โดยใช้กฎสองกฎ:</p>
+<ol>
+<li><strong>Bad Character Rule</strong> – ข้ามตามตัวอักษรในข้อความที่ไม่ตรงกัน</li>
+<li><strong>Good Suffix Rule</strong> – ข้ามตามคำต่อท้ายที่ตรงกันแล้ว</li>
+</ol>
+
+<p>ความซับซ้อน: Best O(n/m), Worst O(n × m) แต่เร็วมากในทางปฏิบัติ โดยเฉพาะกับตัวอักษรเซตใหญ่</p>
+
+<hr>
+
+<h2 id="144-อลกอรทมคนหาขอความของ-rabin-karp">14.4 อัลกอริทึมค้นหาข้อความของ Rabin-Karp</h2>
+
+<h3 id="แนวคด">แนวคิด</h3>
+<p>ใช้การแฮช (hashing) เปรียบเทียบรหัสแฮชของรูปแบบกับรหัสแฮชของส่วนย่อยในข้อความ ถ้ารหัสแฮชตรงกันจึงเปรียบเทียบตัวอักษรจริง</p>
+
+<pre><code class=" language-mermaid">graph LR
+    subgraph RabinKarp[Rabin-Karp ใช้แฮช]
+    direction LR
+    P[แฮชรูปแบบ] --&gt; T1[แฮชส่วนย่อยที่ 1]
+    T1 --&gt; T2[แฮชส่วนย่อยที่ 2]
+    T2 --&gt; T3[แฮชส่วนย่อยที่ 3]
+    T3 --&gt;|แฮชตรงกัน| C[เปรียบเทียบตัวอักษรจริง]
+    end</code></pre>
+
+<p>สามารถคำนวณแฮชส่วนย่อยถัดไปจากแฮชปัจจุบันได้ในเวลา O(1) (rolling hash)</p>
+
+<p>ความซับซ้อน: Average O(n + m), Worst O(n × m)</p>
+
+<hr>
+
+<h2 id="145-โครงสรางขอมลสำหรบสตรง">14.5 โครงสร้างข้อมูลสำหรับสตริง</h2>
+
+<h3 id="ทรอา-trie">ทรีอา (Trie)</h3>
+
+<p>ต้นไม้ที่ใช้เก็บสตริง แต่ละขอบแทนตัวอักษรหนึ่งตัว เหมาะสำหรับการค้นหาคำนำหน้า (prefix)</p>
+
+<pre><code class=" language-mermaid">graph TD
+    root((ราก)) --&gt; A[A]
+    root --&gt; B[B]
+    A --&gt; P[P]
+    P --&gt; P2[P]
+    P2 --&gt; L[L]
+    B --&gt; A2[A]
+    A2 --&gt; N[N]
+    A --&gt; S[S]
+    S --&gt; H[H]
+    
+    style APPLE fill:#C8E6C9
+    style BANANA fill:#C8E6C9
+    style APP fill:#FFF9C4</code></pre>
+
+<h3 id="ตวอยางโคดทรอา-ภาษา-python">ตัวอย่างโค้ดทรีอา (ภาษา Python)</h3>
+<pre><code class=" language-python">class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end_of_word = False
+
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+    
+    def insert(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_end_of_word = True
+    
+    def search(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return node.is_end_of_word
+    
+    def starts_with(self, prefix):
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return True
+
+
+# การใช้งาน
+trie = Trie()
+trie.insert(&quot;apple&quot;)
+trie.insert(&quot;app&quot;)
+trie.insert(&quot;banana&quot;)
+print(trie.search(&quot;app&quot;))        # True
+print(trie.search(&quot;appl&quot;))       # False
+print(trie.starts_with(&quot;app&quot;))   # True</code></pre>
+
+<hr>
+
+<h2 id="146-การเปรยบเทยบประสทธภาพการคนหาขอความ">14.6 การเปรียบเทียบประสิทธิภาพการค้นหาข้อความ</h2>
+
+<table>
+<tr><th>อัลกอริทึม</th><th>Best</th><th>Average</th><th>Worst</th><th>หมายเหตุ</th></tr>
+<tr><td>Brute Force</td><td>O(n)</td><td>O(n × m)</td><td>O(n × m)</td><td>ง่ายที่สุด ช้าที่สุด</td></tr>
+<tr><td>KMP</td><td>O(n + m)</td><td>O(n + m)</td><td>O(n + m)</td><td>ไม่ย้อนกลับในข้อความ</td></tr>
+<tr><td>Boyer-Moore</td><td>O(n/m)</td><td>O(n/m)</td><td>O(n × m)</td><td>เร็วมากในทางปฏิบัติ</td></tr>
+<tr><td>Rabin-Karp</td><td>O(n + m)</td><td>O(n + m)</td><td>O(n × m)</td><td>ใช้แฮช เหมาะค้นหาหลายรูปแบบ</td></tr>
+</table>
+
+<hr>
+
+<h2 id="แบบฝกหด">แบบฝึกหัด</h2>
+
+<h3 id="ขอท-1">ข้อที่ 1</h3>
+<p>จงเขียนอัลกอริทึมค้นหาข้อความแบบเบื้องต้น</p>
+
+<p><strong>คำตอบ:</strong> ดูโค้ดในหัวข้อ 14.1 ฟังก์ชัน <code>brute_force_search</code></p>
+
+<h3 id="ขอท-2">ข้อที่ 2</h3>
+<p>จงอธิบายข้อดีของ KMP เมื่อเทียบกับการค้นหาแบบเบื้องต้น</p>
+
+<p><strong>คำตอบ:</strong> KMP ไม่ย้อนกลับในข้อความเมื่อเกิดการไม่ตรงกัน แต่ใช้ตาราง prefix function เพื่อข้ามไปข้างหน้า ทำให้ความซับซ้อนคงที่ O(n + m) แข็งแกร่งกว่า brute force ที่อาจเป็น O(n × m)</p>
+
+<h3 id="ขอท-3">ข้อที่ 3</h3>
+<p>จงเปรียบเทียบ Boyer-Moore กับ Rabin-Karp ในด้านประสิทธิภาพ</p>
+
+<p><strong>คำตอบ:</strong></p>
+<ul>
+<li>Boyer-Moore: เร็วมากเมื่อตัวอักษรเซตใหญ่ เปรียบเทียบจากท้ายรูปแบบ กรณีดีที่สุด O(n/m)</li>
+<li>Rabin-Karp: ใช้แฮช เหมาะเมื่อต้องการค้นหาหลายรูปแบบพร้อมกัน กรณีเฉลี่ย O(n + m)</li>
+<li>Boyer-Moore มักเร็วกว่าสำหรับการค้นหารูปแบบเดียวในข้อความยาว</li>
+</ul>
+
+<hr>
+
+<h2 id="แบบปฏบตการขอสอบ">แบบปฏิบัติการข้อสอบ</h2>
+
+<h3 id="ขอควบคมเลอกตอบ-จำนวน-8-ขอ">ข้อควบคุมเลือกตอบ (จำนวน 8 ข้อ)</h3>
+
+<p><strong>ข้อ 1.</strong> อัลกอริทึมค้นหาข้อความแบบใดง่ายที่สุดแต่ช้าที่สุด</p>
+<ul>
+<li>ก. KMP</li>
+<li>ข. Brute Force</li>
+<li>ค. Boyer-Moore</li>
+<li>ง. Rabin-Karp</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 2.</strong> KMP แตกต่างจาก Brute Force ตรงที่</p>
+<ul>
+<li>ก. KMP ไม่ย้อนกลับในข้อความเมื่อไม่ตรงกัน</li>
+<li>ข. KMP ใช้แฮช</li>
+<li>ค. KMP เปรียบเทียบจากท้ายรูปแบบ</li>
+<li>ง. KMP ช้ากว่า Brute Force เสมอ</li>
+</ul>
+
+<p><strong>ตอบ: ก</strong></p>
+
+<p><strong>ข้อ 3.</strong> Boyer-Moore เปรียบเทียบรูปแบบกับข้อความจากทิศทางใด</p>
+<ul>
+<li>ก. จากหัวไปท้าย</li>
+<li>ข. จากท้ายไปหัว</li>
+<li>ค. จากกลางออกทั้งสองด้าน</li>
+<li>ง. แบบสุ่ม</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 4.</strong> Rabin-Karp ใช้อะไรในการเปรียบเทียบรูปแบบกับข้อความ</p>
+<ul>
+<li>ก. ตัวชี้</li>
+<li>ข. การแฮช (hashing)</li>
+<li>ค. ลิสต์การเชื่อมต่อ</li>
+<li>ง. สแตก</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 5.</strong> ทรีอา (Trie) เหมาะสำหรับการค้นหาอะไร</p>
+<ul>
+<li>ก. คำนำหน้า (prefix)</li>
+<li>ข. คำต่อท้าย (suffix)</li>
+<li>ค. คำกลาง</li>
+<li>ง. คำทั้งหมด</li>
+</ul>
+
+<p><strong>ตอบ: ก</strong></p>
+
+<p><strong>ข้อ 6.</strong> ความซับซ้อนแย่ที่สุดของ Brute Force คือ</p>
+<ul>
+<li>ก. O(n)</li>
+<li>ข. O(n × m)</li>
+<li>ค. O(n + m)</li>
+<li>ง. O(log n)</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 7.</strong> ความซับซ้อนของ KMP ในทุกกรณีคือ</p>
+<ul>
+<li>ก. O(n)</li>
+<li>ข. O(n × m)</li>
+<li>ค. O(n + m)</li>
+<li>ง. O(n²)</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<p><strong>ข้อ 8.</strong> ข้อใดไม่ใช่อัลกอริทึมค้นหาข้อความ</p>
+<ul>
+<li>ก. KMP</li>
+<li>ข. Boyer-Moore</li>
+<li>ค. Rabin-Karp</li>
+<li>ง. เมอร์จ์ซอร์ต</li>
+</ul>
+
+<p><strong>ตอบ: ง</strong></p>
+
+<h3 id="ขอปฏบตการ-จำนวน-2-ขอ">ข้อปฏิบัติการ (จำนวน 2 ข้อ)</h3>
+
+<p><strong>ข้อ 9.</strong> จงเขียนโค้ดภาษา C หรือ Python ค้นหาข้อความโดยใช้ brute force และ KMP แล้วเปรียบเทียบจำนวนครั้งที่เปรียบเทียบ</p>
+
+<p><strong>ข้อ 10.</strong> จงเขียนโค้ดสร้างทรีอาและรองรับการแทรก ค้นหา และตรวจสอบคำนำหน้า</p>
+
+<hr>
+
+<h2 id="ภาคผนก">ภาคผนก</h2>
+
+<h3 id="ภาคผนก-141-โคดตวอยางอลกอรทมคนหาขอความทกชนด">ภาคผนก 14.1 โค้ดตัวอย่างอัลกอริทึมค้นหาข้อความทุกชนิด</h3>
+
+<p><strong>ภาษา Java – Brute Force:</strong></p>
+<pre><code class=" language-java">public class BruteForce {
+    static int search(String text, String pattern) {
+        int n = text.length();
+        int m = pattern.length();
+        
+        for (int i = 0; i &lt;= n - m; i++) {
+            int j;
+            for (j = 0; j &lt; m; j++) {
+                if (text.charAt(i + j) != pattern.charAt(j))
+                    break;
+            }
+            if (j == m)
+                return i;
+        }
+        return -1;
+    }
+}</code></pre>
+
+<h3 id="ภาคผนก-142-ตวอยางการประยกตใชคนหาขอความในเครองมอแกไขขอความ">ภาคผนก 14.2 ตัวอย่างการประยุกต์ใช้ค้นหาข้อความในเครื่องมือแก้ไขข้อความ</h3>
+
+<p>เครื่องมือแก้ไขข้อความเช่น Notepad, VS Code ใช้อัลกอริทึมค้นหาข้อความในฟีเจอร์ "Find" (ค้นหา) และ "Find and Replace" (ค้นหาและแทนที่) โดยอาจใช้ KMP หรือ Boyer-Moore สำหรับข้อความยาวๆ</p>
+
+<hr>
+
+<h2 id="อางอง">อ้างอิง</h2>
+
+<ul>
+<li>เอกสารประกอบการสอน บทที่ 14 อัลกอริทึมสตริง</li>
+<li>คู่มืออัลกอริทึมสตริงสำหรับนักศึกษา</li>
+</ul>
+
+        <div class="chapter-nav">
+          <a href="chapter-13.html" class="nav-btn"><span class="sr-only">ย้อนกลับ</span>← บทก่อนหน้า: 13 การแบ่งและพิชิต (Divide and Conquer)</a>
+          <a href="chapter-15.html" class="nav-btn">บทถัดไป: 15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ <span class="sr-only">ถัดไป</span>→</a>
+        </div>
+      </article>
+    </main>
+  </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-text">&copy; 2026 MaeeYeng — โครงสร้างข้อมูลและอัลกอริทึม. สงวนลิขสิทธิ์ทุกประการ.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('nav-menu');
+      const btn = document.querySelector('.mobile-menu-btn');
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    }
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('nav-menu').classList.remove('open');
+        document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>

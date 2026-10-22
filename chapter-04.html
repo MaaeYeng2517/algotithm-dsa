@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>บทที่ 4 สแตกและคิว (Stack and Queue) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</title>
+  <meta name="description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta name="author" content="MaeeYeng">
+  <meta name="keywords" content="โครงสร้างข้อมูล, อัลกอริทึม, DSA, Data Structures, Algorithms, Big O, Sorting, Searching, Graph, Tree, Hash Table, Dynamic Programming, Greedy, Divide and Conquer, C, Python, Java">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://maaeyeng2517.github.io/algotithm-dsa/chapter-04.html">
+  <link rel="stylesheet" href="style.css">
+  <!-- Open Graph -->
+  <meta property="og:title" content="บทที่ 4 สแตกและคิว (Stack and Queue) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maaeyeng2517.github.io/algotithm-dsa/chapter-04.html">
+  
+  <meta property="og:site_name" content="DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:locale" content="th_TH">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="บทที่ 4 สแตกและคิว (Stack and Queue) | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta name="twitter:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'base', securityLevel: 'loose' });</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">DSA</div>
+        <span>DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</span>
+      </a>
+      <button class="mobile-menu-btn" aria-label="เปิดเมนูนำทาง" aria-expanded="false" onclick="toggleMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="chapter-01.html">1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+        <li><a href="chapter-02.html">2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+        <li><a href="chapter-03.html">3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+        <li><a href="chapter-04.html" class="active">4 สแตกและคิว (Stack and Queue)</a></li>
+        <li><a href="chapter-05.html">5 ลิงก์ลิสต์ (Linked List)</a></li>
+        <li><a href="chapter-06.html">6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+        <li><a href="chapter-07.html">7 ตารางแฮช (Hash Table)</a></li>
+        <li><a href="chapter-08.html">8 กราฟ (Graph)</a></li>
+        <li><a href="chapter-09.html">9 การเรียงลำดับ (Sorting)</a></li>
+        <li><a href="chapter-10.html">10 การค้นหา (Searching)</a></li>
+        <li><a href="chapter-11.html">11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+        <li><a href="chapter-12.html">12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+        <li><a href="chapter-13.html">13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+        <li><a href="chapter-14.html">14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+        <li><a href="chapter-15.html">15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+
+  <nav class="breadcrumb">
+    <a href="index.html">หน้าแรก</a>
+    <span>›</span>
+    <span>บทที่ 4 สแตกและคิว (Stack and Queue)</span>
+  </nav>
+
+  <div class="content-grid">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h3>สารบัญบทเรียน<span class="badge">15 บท</span></h3>
+        <ul class="chapter-list">
+    <li><a href="chapter-01.html"><span class="chapter-number">01</span>1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+    <li><a href="chapter-02.html"><span class="chapter-number">02</span>2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+    <li><a href="chapter-03.html"><span class="chapter-number">03</span>3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+    <li><a href="chapter-04.html" class="active"><span class="chapter-number">04</span>4 สแตกและคิว (Stack and Queue)</a></li>
+    <li><a href="chapter-05.html"><span class="chapter-number">05</span>5 ลิงก์ลิสต์ (Linked List)</a></li>
+    <li><a href="chapter-06.html"><span class="chapter-number">06</span>6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+    <li><a href="chapter-07.html"><span class="chapter-number">07</span>7 ตารางแฮช (Hash Table)</a></li>
+    <li><a href="chapter-08.html"><span class="chapter-number">08</span>8 กราฟ (Graph)</a></li>
+    <li><a href="chapter-09.html"><span class="chapter-number">09</span>9 การเรียงลำดับ (Sorting)</a></li>
+    <li><a href="chapter-10.html"><span class="chapter-number">10</span>10 การค้นหา (Searching)</a></li>
+    <li><a href="chapter-11.html"><span class="chapter-number">11</span>11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+    <li><a href="chapter-12.html"><span class="chapter-number">12</span>12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+    <li><a href="chapter-13.html"><span class="chapter-number">13</span>13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+    <li><a href="chapter-14.html"><span class="chapter-number">14</span>14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+    <li><a href="chapter-15.html"><span class="chapter-number">15</span>15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content-area" id="main-content">
+      <article>
+        <div class="article-meta">
+          <span class="meta-item"><strong>บทเรียน:</strong> บทที่ 4 สแตกและคิว (Stack and Queue)</span>
+          <span class="meta-item"><strong>หมวด:</strong> โครงสร้างข้อมูลและอัลกอริทึม</span>
+          <span class="meta-item"><strong>ภาษา:</strong> ไทย / English</span>
+        </div>
+        <h1>บทที่ 4 สแตกและคิว (Stack and Queue)</h1>
+        
+<h2 id="วตถประสงคการเรยนร">วัตถุประสงค์การเรียนรู้</h2>
+<p>เมื่อเรียนจบบทนี้ นักศึกษาจะสามารถ</p>
+<ol>
+<li>อธิบายหลักการ LIFO (Last-In, First-Out) ของสแตก</li>
+<li>อธิบายหลักการ FIFO (First-In, First-Out) ของคิว</li>
+<li>อธิบายการดำเนินการพื้นฐานของสแตกและคิว (push, pop, enqueue, dequeue)</li>
+<li>ประยุกต์ใช้สแตกและคิวในการแก้ปัญหาเบื้องต้น</li>
+<li>แยกแยะสแตกธรรมดา คิวธรรมดา คิวแบบวงกลม และเด็กซ์ (Deque)</li>
+</ol>
+
+<h2 id="การประเมน">การประเมิน</h2>
+<table>
+<tr><th>รายการ</th><th>น้ำหนัก</th><th>หมายเหตุ</th></tr>
+<tr><td>งานเขียนโปรแกรมจำลองสแตกและคิว</td><td>15%</td><td>โค้ดภาษา C/Python/Java</td></tr>
+<tr><td>แบบทดสอบท้ายบท</td><td>10%</td><td>ข้อควบคุมเลือกตอบและอัตนัย</td></tr>
+<tr><td>การเข้าร่วมกิจกรรมจำลองสถานการณ์ใช้สแตกและคิว</td><td>5%</td><td>กิจกรรมกลุ่ม</td></tr>
+</table>
+
+<hr>
+
+<h2 id="41-สแตก-stack-และหลกการ-lifo">4.1 สแตก (Stack) และหลักการ LIFO</h2>
+
+<p>สแตกคือโครงสร้างข้อมูลที่การเพิ่มและลบเกิดขึ้นที่ด้านเดียวเรียกว่า <strong>ยอดสแตก (top)</strong> </p>
+
+<p>หลักการ <strong>LIFO (Last-In, First-Out)</strong> คือ ตัวที่เข้าไปทีหลังจะออกมาก่อน เปรียบเสมือนกองจาน หรือกล่องทับกัน</p>
+
+<pre><code class=" language-mermaid">graph TD
+    subgraph Stack[สแตก - LIFO]
+        direction TB
+        T4([40]) --&gt;|pop| T3([30])
+        T3 --&gt;|pop| T2([20])
+        T2 --&gt;|pop| T1([10])
+        T1 --&gt;|bottom| Base[(พื้น)]
+    end
+    
+    Push[push 10] --&gt; T1
+    Push --&gt;|push 20| T2
+    Push --&gt;|push 30| T3
+    Push --&gt;|push 40| T4</code></pre>
+
+<h3 id="การดำเนนการกบสแตก">การดำเนินการกับสแตก</h3>
+
+<table>
+<tr><th>การดำเนินการ</th><th>คำอธิบาย</th><th>ความซับซ้อน</th></tr>
+<tr><td><strong>push(x)</strong></td><td>ใส่ x ที่ยอดสแตก</td><td>O(1)</td></tr>
+<tr><td><strong>pop()</strong></td><td>เอาตัวที่ยอดออกและคืนค่า</td><td>O(1)</td></tr>
+<tr><td><strong>peek()</strong></td><td>ดูค่าที่ยอดโดยไม่เอาออก</td><td>O(1)</td></tr>
+<tr><td><strong>isEmpty()</strong></td><td>ตรวจสอบว่าสแตกว่างหรือไม่</td><td>O(1)</td></tr>
+<tr><td><strong>isFull()</strong></td><td>ตรวจสอบว่าสแตกเต็มหรือไม่ (ถ้าใช้อาเรย์คงที่)</td><td>O(1)</td></tr>
+</table>
+
+<h3 id="ภาวะผดปกตของสแตก">ภาวะผิดปกติของสแตก</h3>
+<ul>
+<li><strong>Stack Overflow</strong>: การ push เมื่อสแตกเต็มแล้ว</li>
+<li><strong>Stack Underflow</strong>: การ pop หรือ peek เมื่อสแตกว่าง</li>
+</ul>
+
+<hr>
+
+<h2 id="42-ตวอยางโคดสแตก">4.2 ตัวอย่างโค้ดสแตก</h2>
+
+<h3 id="ภาษา-python">ภาษา Python</h3>
+<pre><code class=" language-python">class Stack:
+    def __init__(self):
+        self.items = []
+    
+    def push(self, item):
+        self.items.append(item)
+    
+    def pop(self):
+        if self.is_empty():
+            raise IndexError(&quot;Stack Underflow&quot;)
+        return self.items.pop()
+    
+    def peek(self):
+        if self.is_empty():
+            raise IndexError(&quot;Stack is empty&quot;)
+        return self.items[-1]
+    
+    def is_empty(self):
+        return len(self.items) == 0
+    
+    def size(self):
+        return len(self.items)
+
+
+# การใช้งาน
+s = Stack()
+s.push(10)
+s.push(20)
+s.push(30)
+print(s.pop())   # 30 (ตัวสุดท้ายที่เข้า ออกก่อน)
+print(s.peek())  # 20
+print(s.pop())   # 20
+print(s.pop())   # 10</code></pre>
+
+<h3 id="ภาษา-c">ภาษา C</h3>
+<pre><code class=" language-c">#include &lt;stdio.h&gt;
+#define MAX 100
+
+typedef struct {
+    int items[MAX];
+    int top;
+} Stack;
+
+void init(Stack *s) {
+    s-&gt;top = -1;
+}
+
+int is_empty(Stack *s) {
+    return s-&gt;top == -1;
+}
+
+int is_full(Stack *s) {
+    return s-&gt;top == MAX - 1;
+}
+
+void push(Stack *s, int value) {
+    if (is_full(s)) {
+        printf(&quot;Stack Overflow\n&quot;);
+        return;
+    }
+    s-&gt;items[++s-&gt;top] = value;
+}
+
+int pop(Stack *s) {
+    if (is_empty(s)) {
+        printf(&quot;Stack Underflow\n&quot;);
+        return -1;
+    }
+    return s-&gt;items[s-&gt;top--];
+}
+
+int peek(Stack *s) {
+    if (is_empty(s)) {
+        printf(&quot;Stack is empty\n&quot;);
+        return -1;
+    }
+    return s-&gt;items[s-&gt;top];
+}
+
+int main() {
+    Stack s;
+    init(&amp;s);
+    push(&amp;s, 10);
+    push(&amp;s, 20);
+    push(&amp;s, 30);
+    printf(&quot;%d\n&quot;, pop(&amp;s));  // 30
+    return 0;
+}</code></pre>
+
+<hr>
+
+<h2 id="43-คว-queue-และหลกการ-fifo">4.3 คิว (Queue) และหลักการ FIFO</h2>
+
+<p>คิวคือโครงสร้างข้อมูลที่การเพิ่มเกิดขึ้นที่ด้านท้าย (rear) และการลบเกิดขึ้นที่ด้านหน้า (front)</p>
+
+<p>หลักการ <strong>FIFO (First-In, First-Out)</strong> คือ ตัวที่เข้ามาก่อนจะออกก่อน เปรียบเสมือนคนต่อแถวซื้อตั๋ว</p>
+
+<pre><code class=" language-mermaid">graph LR
+    subgraph Queue[คิว - FIFO]
+        direction LR
+        Front[หน้า] --&gt; Q1([10]) --&gt; Q2([20]) --&gt; Q3([30]) --&gt; Rear[ท้าย]
+    end
+    
+    Enqueue[enqueue 40] --&gt; Q3
+    Dequeue[dequeue] --&gt; Q1</code></pre>
+
+<h3 id="การดำเนนการกบคว">การดำเนินการกับคิว</h3>
+
+<table>
+<tr><th>การดำเนินการ</th><th>คำอธิบาย</th><th>ความซับซ้อน</th></tr>
+<tr><td><strong>enqueue(x)</strong></td><td>ใส่ x ที่ด้านท้าย</td><td>O(1)</td></tr>
+<tr><td><strong>dequeue()</strong></td><td>เอาตัวที่ด้านหน้าออกและคืนค่า</td><td>O(1)</td></tr>
+<tr><td><strong>front()</strong></td><td>ดูค่าที่ด้านหน้าโดยไม่เอาออก</td><td>O(1)</td></tr>
+<tr><td><strong>rear()</strong></td><td>ดูค่าที่ด้านท้ายโดยไม่เอาออก</td><td>O(1)</td></tr>
+<tr><td><strong>isEmpty()</strong></td><td>ตรวจสอบว่าคิวว่างหรือไม่</td><td>O(1)</td></tr>
+</table>
+
+<hr>
+
+<h2 id="44-ตวอยางโคดคว">4.4 ตัวอย่างโค้ดคิว</h2>
+
+<h3 id="ภาษา-python">ภาษา Python</h3>
+<pre><code class=" language-python">from collections import deque
+
+class Queue:
+    def __init__(self):
+        self.items = deque()
+    
+    def enqueue(self, item):
+        self.items.append(item)
+    
+    def dequeue(self):
+        if self.is_empty():
+            raise IndexError(&quot;Queue Underflow&quot;)
+        return self.items.popleft()
+    
+    def front(self):
+        if self.is_empty():
+            raise IndexError(&quot;Queue is empty&quot;)
+        return self.items[0]
+    
+    def is_empty(self):
+        return len(self.items) == 0
+    
+    def size(self):
+        return len(self.items)
+
+
+# การใช้งาน
+q = Queue()
+q.enqueue(10)
+q.enqueue(20)
+q.enqueue(30)
+print(q.dequeue())  # 10 (ตัวแรกที่เข้า ออกก่อน)
+print(q.front())    # 20
+print(q.dequeue())  # 20</code></pre>
+
+<hr>
+
+<h2 id="45-ควแบบวงกลม-circular-queue">4.5 คิวแบบวงกลม (Circular Queue)</h2>
+
+<p>คิวธรรมดาเมื่อ dequeue แล้วพื้นที่ด้านหน้าจะเสียเปล่าไป คิวแบบวงกลมแก้ไขโดยให้ด้านท้ายเชื่อมกลับไปด้านหน้าเมื่อถึงขอบเขต</p>
+
+<pre><code class=" language-mermaid">graph LR
+    subgraph CircularQueue[คิวแบบวงกลม]
+        direction LR
+        Q0([10]) --&gt; Q1([20]) --&gt; Q2([30]) --&gt; Q3([ ])
+        Q3 -.-&gt;|เชื่อมวงกลม| Q0
+    end</code></pre>
+
+<h3 id="ตวอยางโคดควแบบวงกลม-ภาษา-c">ตัวอย่างโค้ดคิวแบบวงกลม (ภาษา C)</h3>
+<pre><code class=" language-c">#include &lt;stdio.h&gt;
+#define MAX 5
+
+typedef struct {
+    int items[MAX];
+    int front, rear;
+} CircularQueue;
+
+void init(CircularQueue *q) {
+    q-&gt;front = -1;
+    q-&gt;rear = -1;
+}
+
+int is_empty(CircularQueue *q) {
+    return q-&gt;front == -1;
+}
+
+int is_full(CircularQueue *q) {
+    return (q-&gt;rear + 1) % MAX == q-&gt;front;
+}
+
+void enqueue(CircularQueue *q, int value) {
+    if (is_full(q)) {
+        printf(&quot;Queue Overflow\n&quot;);
+        return;
+    }
+    if (is_empty(q)) {
+        q-&gt;front = 0;
+    }
+    q-&gt;rear = (q-&gt;rear + 1) % MAX;
+    q-&gt;items[q-&gt;rear] = value;
+}
+
+int dequeue(CircularQueue *q) {
+    if (is_empty(q)) {
+        printf(&quot;Queue Underflow\n&quot;);
+        return -1;
+    }
+    int value = q-&gt;items[q-&gt;front];
+    if (q-&gt;front == q-&gt;rear) {
+        q-&gt;front = -1;
+        q-&gt;rear = -1;
+    } else {
+        q-&gt;front = (q-&gt;front + 1) % MAX;
+    }
+    return value;
+}</code></pre>
+
+<hr>
+
+<h2 id="46-เดกซ-deque">4.6 เด็กซ์ (Deque)</h2>
+
+<p>เด็กซ์ย่อมาจาก <strong>Double-Ended Queue</strong> คือคิวที่สามารถเพิ่มและลบได้ทั้งสองด้าน (หน้าและท้าย)</p>
+
+<pre><code class=" language-mermaid">graph LR
+    subgraph Deque[เด็กซ์]
+        direction LR
+        Front[หน้า] &lt;==&gt; D1([10]) &lt;==&gt; D2([20]) &lt;==&gt; D3([30]) &lt;==&gt; Rear[ท้าย]
+    end
+    
+    PushFront[push_front 5] --&gt; D1
+    PushBack[push_back 40] --&gt; D3
+    PopFront[pop_front] --&gt; D1
+    PopBack[pop_back] --&gt; D3</code></pre>
+
+<hr>
+
+<h2 id="47-การประยกตใช">4.7 การประยุกต์ใช้</h2>
+
+<table>
+<tr><th>โครงสร้าง</th><th>การประยุกต์ใช้</th></tr>
+<tr><td>สแตก</td><td>ฟีเจอร์ยกเลิก (undo) ในโปรแกรมแก้ไขข้อความ, ตรวจสอบวงเล็บคู่กัน, แปลงนิพจน์อินฟิกซ์เป็นโพสฟิกซ์, เรียกฟังก์ชันในคอมพิวเตอร์ (call stack)</td></tr>
+<tr><td>คิว</td><td>ระบบคิวบริการ (ธนาคาร ร้านอาหาร), การจัดลำดับงานพิมพ์ (print spooler), การทำงานแบบ BFS ในกราฟ, เครือข่ายคอมพิวเตอร์</td></tr>
+<tr><td>คิวแบบวงกลม</td><td>เบฟเฟอร์แบบวงกลม (circular buffer) ในระบบฝังตัว</td></tr>
+<tr><td>เด็กซ์</td><td>แอปดูรูปภาพก่อนหน้า/ถัดไป, การจัดตารางงานแบบขั้นตอน</td></tr>
+</table>
+
+<hr>
+
+<h2 id="แบบฝกหด">แบบฝึกหัด</h2>
+
+<h3 id="ขอท-1">ข้อที่ 1</h3>
+<p>จงเขียนอัลกอริทึมตรวจสอบวงเล็บในนิพจน์ว่าคู่กันหรือไม่ โดยใช้สแตก</p>
+
+<p><strong>แนวทางคำตอบ:</strong></p>
+<pre><code class="">อัลกอริทึม ตรวจสอบวงเล็บ
+อินพุต: นิพจน์เป็นสตริง
+เอาต์พุต: วงเล็บคู่กันหรือไม่
+
+1. สร้างสแตกว่าง S
+2. สำหรับแต่ละตัวอักษร c ในนิพจน์ ทำ
+3.     ถ้า c เป็นวงเล็บเปิด (, {, [ ให้ push(c) ลงสแตก
+4.     ถ้า c เป็นวงเล็บปิด ), }, ] แล้ว
+5.         ถ้าสแตกว่าง ให้คืนค่า &quot;ไม่คู่กัน&quot;
+6.         pop ตัวออกจากสแตก แล้วตรวจสอบว่าคู่กับ c หรือไม่
+7.         ถ้าไม่คู่กัน ให้คืนค่า &quot;ไม่คู่กัน&quot;
+8. สิ้นสุดลูป
+9. ถ้าสแตกว่าง ให้คืนค่า &quot;คู่กัน&quot; มิฉะนั้น &quot;ไม่คู่กัน&quot;</code></pre>
+
+<h3 id="ขอท-2">ข้อที่ 2</h3>
+<p>จงเขียนอัลกอริทึมแปลงนิพจน์อินฟิกซ์เป็นโพสฟิกซ์โดยใช้สแตก</p>
+
+<p><strong>ตัวอย่าง:</strong></p>
+<ul>
+<li>อินฟิกซ์: <code>A + B * C</code></li>
+<li>โพสฟิกซ์: <code>A B C * +</code></li>
+</ul>
+
+<h3 id="ขอท-3">ข้อที่ 3</h3>
+<p>จงอธิบายสถานการณ์ที่เหมาะกับการใช้คิวแบบวงกลมมากกว่าคิวธรรมดา</p>
+
+<p><strong>คำตอบ:</strong> คิวแบบวงกลมเหมาะเมื่อมีการเพิ่มและลบสมาชิกซ้ำๆ หลายครั้ง โดยไม่อยากให้พื้นที่ด้านหน้าของอาเรย์เสียเปล่าหลังจาก dequeue แล้ว เหมาะสำหรับระบบที่มีหน่วยความจำจำกัด เช่น ระบบฝังตัว</p>
+
+<hr>
+
+<h2 id="แบบปฏบตการขอสอบ">แบบปฏิบัติการข้อสอบ</h2>
+
+<h3 id="ขอควบคมเลอกตอบ-จำนวน-6-ขอ">ข้อควบคุมเลือกตอบ (จำนวน 6 ข้อ)</h3>
+
+<p><strong>ข้อ 1.</strong> สแตกใช้หลักการใด</p>
+<ul>
+<li>ก. FIFO</li>
+<li>ข. LIFO</li>
+<li>ค. ทั้งสองอย่าง</li>
+<li>ง. ไม่ใช้หลักการใด</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 2.</strong> คิวใช้หลักการใด</p>
+<ul>
+<li>ก. FIFO</li>
+<li>ข. LIFO</li>
+<li>ค. ทั้งสองอย่าง</li>
+<li>ง. ไม่ใช้หลักการใด</li>
+</ul>
+
+<p><strong>ตอบ: ก</strong></p>
+
+<p><strong>ข้อ 3.</strong> การเอาสมาชิกออกจากสแตกเรียกว่า</p>
+<ul>
+<li>ก. push</li>
+<li>ข. pop</li>
+<li>ค. enqueue</li>
+<li>ง. dequeue</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 4.</strong> การใส่สมาชิกเข้าไปในคิวเรียกว่า</p>
+<ul>
+<li>ก. push</li>
+<li>ข. pop</li>
+<li>ค. enqueue</li>
+<li>ง. dequeue</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<p><strong>ข้อ 5.</strong> ภาวะที่เกิดเมื่อ pop จากสแตกที่ว่างเรียกว่า</p>
+<ul>
+<li>ก. Stack Overflow</li>
+<li>ข. Stack Underflow</li>
+<li>ค. Queue Overflow</li>
+<li>ง. Queue Underflow</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 6.</strong> คิวแบบวงกลมแก้ปัญหาอะไรของคิวธรรมดา</p>
+<ul>
+<li>ก. พื้นที่ด้านหน้าเสียเปล่าหลัง dequeue</li>
+<li>ข. คิวเต็มเร็วเกินไป</li>
+<li>ค. การ enqueue ช้า</li>
+<li>ง. การ dequeue ช้า</li>
+</ul>
+
+<p><strong>ตอบ: ก</strong></p>
+
+<h3 id="ขออตนย-จำนวน-2-ขอ">ข้ออัตนัย (จำนวน 2 ข้อ)</h3>
+
+<p><strong>ข้อ 7.</strong> จงเขียนโค้ดภาษา C หรือ Python จำลองสแตกที่รองรับ push, pop, peek และ isEmpty</p>
+
+<p><strong>ข้อ 8.</strong> จงเขียนโค้ดจำลองคิวแบบวงกลมในภาษา C ที่รองรับ enqueue และ dequeue โดยไม่ให้พื้นที่เสียเปล่า</p>
+
+<hr>
+
+<h2 id="ภาคผนก">ภาคผนก</h2>
+
+<h3 id="ภาคผนก-41-โคดตวอยางสแตกและควภาษา-c--python--java">ภาคผนก 4.1 โค้ดตัวอย่างสแตกและคิวภาษา C / Python / Java</h3>
+
+<p><strong>ภาษา Java – คลาส Stack:</strong></p>
+<pre><code class=" language-java">import java.util.EmptyStackException;
+
+public class MyStack&lt;T&gt; {
+    private java.util.ArrayList&lt;T&gt; items = new java.util.ArrayList&lt;&gt;();
+    
+    public void push(T item) {
+        items.add(item);
+    }
+    
+    public T pop() {
+        if (isEmpty()) throw new EmptyStackException();
+        return items.remove(items.size() - 1);
+    }
+    
+    public T peek() {
+        if (isEmpty()) throw new EmptyStackException();
+        return items.get(items.size() - 1);
+    }
+    
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
+}</code></pre>
+
+<h3 id="ภาคผนก-42-ตวอยางกรณศกษาการใชสแตกในเครองมอพฒนาซอฟตแวร">ภาคผนก 4.2 ตัวอย่างกรณีศึกษาการใช้สแตกในเครื่องมือพัฒนาซอฟต์แวร์</h3>
+
+<p>เครื่องมือแก้ไขข้อความส่วนใหญ่ใช้สแตกเก็บประวัติการแก้ไขเพื่อฟีเจอร์ <strong>undo</strong> ทุกครั้งที่ผู้ใช้แก้ไขข้อความ จะ push การกระทำนั้นเข้าไปในสแตก เมื่อกด undo จะ pop การกระทุล่าสุดออกแล้วย้อนกลับ</p>
+
+<hr>
+
+<h2 id="อางอง">อ้างอิง</h2>
+
+<ul>
+<li>เอกสารประกอบการสอน บทที่ 4 สแตกและคิว</li>
+<li>หนังสืออ้างอิงโครงสร้างข้อมูลฉบับภาษาไทย</li>
+</ul>
+
+        <div class="chapter-nav">
+          <a href="chapter-03.html" class="nav-btn"><span class="sr-only">ย้อนกลับ</span>← บทก่อนหน้า: 3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a>
+          <a href="chapter-05.html" class="nav-btn">บทถัดไป: 5 ลิงก์ลิสต์ (Linked List) <span class="sr-only">ถัดไป</span>→</a>
+        </div>
+      </article>
+    </main>
+  </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-text">&copy; 2026 MaeeYeng — โครงสร้างข้อมูลและอัลกอริทึม. สงวนลิขสิทธิ์ทุกประการ.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('nav-menu');
+      const btn = document.querySelector('.mobile-menu-btn');
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    }
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('nav-menu').classList.remove('open');
+        document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>บทที่ 15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</title>
+  <meta name="description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta name="author" content="MaeeYeng">
+  <meta name="keywords" content="โครงสร้างข้อมูล, อัลกอริทึม, DSA, Data Structures, Algorithms, Big O, Sorting, Searching, Graph, Tree, Hash Table, Dynamic Programming, Greedy, Divide and Conquer, C, Python, Java">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://maaeyeng2517.github.io/algotithm-dsa/chapter-15.html">
+  <link rel="stylesheet" href="style.css">
+  <!-- Open Graph -->
+  <meta property="og:title" content="บทที่ 15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maaeyeng2517.github.io/algotithm-dsa/chapter-15.html">
+  
+  <meta property="og:site_name" content="DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta property="og:locale" content="th_TH">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="บทที่ 15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ | DSA Course - โครงสร้างข้อมูลและอัลกอริทึม">
+  <meta name="twitter:description" content="ตำบลเรียนโครงสร้างข้อมูลและอัลกอริทึม ครบถ้วน 15 บท พร้อมโค้ด C/C++ และ Python แบบฝึกหัด ข้อสอบ และภาคผนก">
+  
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'base', securityLevel: 'loose' });</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">DSA</div>
+        <span>DSA Course - โครงสร้างข้อมูลและอัลกอริทึม</span>
+      </a>
+      <button class="mobile-menu-btn" aria-label="เปิดเมนูนำทาง" aria-expanded="false" onclick="toggleMenu()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="chapter-01.html">1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+        <li><a href="chapter-02.html">2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+        <li><a href="chapter-03.html">3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+        <li><a href="chapter-04.html">4 สแตกและคิว (Stack and Queue)</a></li>
+        <li><a href="chapter-05.html">5 ลิงก์ลิสต์ (Linked List)</a></li>
+        <li><a href="chapter-06.html">6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+        <li><a href="chapter-07.html">7 ตารางแฮช (Hash Table)</a></li>
+        <li><a href="chapter-08.html">8 กราฟ (Graph)</a></li>
+        <li><a href="chapter-09.html">9 การเรียงลำดับ (Sorting)</a></li>
+        <li><a href="chapter-10.html">10 การค้นหา (Searching)</a></li>
+        <li><a href="chapter-11.html">11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+        <li><a href="chapter-12.html">12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+        <li><a href="chapter-13.html">13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+        <li><a href="chapter-14.html">14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+        <li><a href="chapter-15.html" class="active">15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="container">
+
+  <nav class="breadcrumb">
+    <a href="index.html">หน้าแรก</a>
+    <span>›</span>
+    <span>บทที่ 15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</span>
+  </nav>
+
+  <div class="content-grid">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h3>สารบัญบทเรียน<span class="badge">15 บท</span></h3>
+        <ul class="chapter-list">
+    <li><a href="chapter-01.html"><span class="chapter-number">01</span>1 บทนำการออกแบบและวิเคราะห์อัลกอริทึม</a></li>
+    <li><a href="chapter-02.html"><span class="chapter-number">02</span>2 การวิเคราะห์ความซับซ้อนและสัญลักษณ์บิ๊กโอ (Big O)</a></li>
+    <li><a href="chapter-03.html"><span class="chapter-number">03</span>3 อาเรย์และลิสต์เชิงเส้น (Array and Linear List)</a></li>
+    <li><a href="chapter-04.html"><span class="chapter-number">04</span>4 สแตกและคิว (Stack and Queue)</a></li>
+    <li><a href="chapter-05.html"><span class="chapter-number">05</span>5 ลิงก์ลิสต์ (Linked List)</a></li>
+    <li><a href="chapter-06.html"><span class="chapter-number">06</span>6 ต้นไม้และไบนารีเซิร์ชทรี (Tree and Binary Search Tree)</a></li>
+    <li><a href="chapter-07.html"><span class="chapter-number">07</span>7 ตารางแฮช (Hash Table)</a></li>
+    <li><a href="chapter-08.html"><span class="chapter-number">08</span>8 กราฟ (Graph)</a></li>
+    <li><a href="chapter-09.html"><span class="chapter-number">09</span>9 การเรียงลำดับ (Sorting)</a></li>
+    <li><a href="chapter-10.html"><span class="chapter-number">10</span>10 การค้นหา (Searching)</a></li>
+    <li><a href="chapter-11.html"><span class="chapter-number">11</span>11 อัลกอริทึมเชิงละม่วน (Greedy Algorithm)</a></li>
+    <li><a href="chapter-12.html"><span class="chapter-number">12</span>12 ไดนามิกโปรแกรมมิง (Dynamic Programming)</a></li>
+    <li><a href="chapter-13.html"><span class="chapter-number">13</span>13 การแบ่งและพิชิต (Divide and Conquer)</a></li>
+    <li><a href="chapter-14.html"><span class="chapter-number">14</span>14 อัลกอริทึมสตริง (String Algorithm)</a></li>
+    <li><a href="chapter-15.html" class="active"><span class="chapter-number">15</span>15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content-area" id="main-content">
+      <article>
+        <div class="article-meta">
+          <span class="meta-item"><strong>บทเรียน:</strong> บทที่ 15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</span>
+          <span class="meta-item"><strong>หมวด:</strong> โครงสร้างข้อมูลและอัลกอริทึม</span>
+          <span class="meta-item"><strong>ภาษา:</strong> ไทย / English</span>
+        </div>
+        <h1>บทที่ 15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</h1>
+        
+<h2 id="วตถประสงคการเรยนร">วัตถุประสงค์การเรียนรู้</h2>
+<p>เมื่อเรียนจบบทนี้ นักศึกษาจะสามารถ</p>
+<ol>
+<li>อธิบายอัลกอริทึมขั้นสูง เช่น เส้นทางที่สั้นที่สุดของไดจ์สตรา ฟลอยด์-วอแชลล์</li>
+<li>อธิบายความซับซ้อนเชิงคำนวการและคลาส P, NP, NP-complete</li>
+<li>อธิบายแนวคิดการประมาณผลและอัลกอริทึมสุ่ม</li>
+<li>สังเคราะห์ความรู้จากทุกบทเพื่อออกแบบระบบที่ใช้โครงสร้างข้อมูลและอัลกอริทึม</li>
+<li>เขียนโปรแกรมแก้ปัญหาขั้นสูงได้อย่างถูกต้องและเหมาะสม</li>
+</ol>
+
+<h2 id="การประเมน">การประเมิน</h2>
+<table>
+<tr><th>รายการ</th><th>น้ำหนัก</th><th>หมายเหตุ</th></tr>
+<tr><td>โครงงานปลายทาง (Final Project)</td><td>20%</td><td>ออกแบบและเขียนโปรแกรมแก้ปัญหาจริง</td></tr>
+<tr><td>แบบทดสอบท้ายบท</td><td>10%</td><td>ข้อควบคุมเลือกตอบและปฏิบัติการ</td></tr>
+<tr><td>การนำเสนอโครงงาน</td><td>10%</td><td>นำเสนอโครงงานปลายทาง</td></tr>
+</table>
+
+<hr>
+
+<h2 id="151-อลกอรทมเสนทางทสนทสด">15.1 อัลกอริทึมเส้นทางที่สั้นที่สุด</h2>
+
+<h3 id="อลกอรทมไดจสตรา-dijkstras-algorithm">อัลกอริทึมไดจ์สตรา (Dijkstra's Algorithm)</h3>
+
+<p>หาเส้นทางที่สั้นที่สุดจากจุดเริ่มต้นไปยังทุกจุดในกราฟที่มีน้ำหนักไม่ติดลบ</p>
+
+<pre><code class=" language-mermaid">graph TD
+    A((A เริ่มต้น)) --&gt;|4| B((B))
+    A --&gt;|2| C((C))
+    C --&gt;|1| B
+    C --&gt;|5| D((D))
+    B --&gt;|3| D
+    
+    style A fill:#C8E6C9
+    style D fill:#FFCDD2</code></pre>
+
+<p><strong>ขั้นตอน:</strong></p>
+<ol>
+<li>กำหนดระยะห่างจากจุดเริ่มต้นเป็น 0 จุดอื่นเป็น อนันต์</li>
+<li>เลือกจุดที่ยังไม่ visit และมีระยะห่างน้อยที่สุด</li>
+<li>อัปเดตระยะห่างของจุดข้างเคียง</li>
+<li>ทำซ้ำจนครบทุกจุด</li>
+</ol>
+
+<h3 id="ตวอยางโคดไดจสตรา-ภาษา-python">ตัวอย่างโค้ดไดจ์สตรา (ภาษา Python)</h3>
+<pre><code class=" language-python">import heapq
+
+def dijkstra(graph, start):
+    distances = {node: float(&#x27;infinity&#x27;) for node in graph}
+    distances[start] = 0
+    pq = [(0, start)]
+    
+    while pq:
+        current_distance, current_node = heapq.heappop(pq)
+        
+        if current_distance &gt; distances[current_node]:
+            continue
+        
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
+            
+            if distance &lt; distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(pq, (distance, neighbor))
+    
+    return distances
+
+
+# การใช้งาน
+graph = {
+    &#x27;A&#x27;: {&#x27;B&#x27;: 4, &#x27;C&#x27;: 2},
+    &#x27;B&#x27;: {&#x27;C&#x27;: 1, &#x27;D&#x27;: 3},
+    &#x27;C&#x27;: {&#x27;B&#x27;: 1, &#x27;D&#x27;: 5},
+    &#x27;D&#x27;: {}
+}
+print(dijkstra(graph, &#x27;A&#x27;))
+# {&#x27;A&#x27;: 0, &#x27;B&#x27;: 3, &#x27;C&#x27;: 2, &#x27;D&#x27;: 6}</code></pre>
+
+<p>ความซับซ้อน: O((V + E) log V) เมื่อใช้ priority queue</p>
+
+<h3 id="อลกอรทมฟลอยด-วอแชลล-floyd-warshall">อัลกอริทึมฟลอยด์-วอแชลล์ (Floyd-Warshall)</h3>
+
+<p>หาเส้นทางที่สั้นที่สุดระหว่างทุกคู่ของจุดยอด (All-Pairs Shortest Path) ใช้ไดนามิกโปรแกรมมิง</p>
+
+<p>ความซับซ้อน: O(V³)</p>
+
+<hr>
+
+<h2 id="152-ความซบซอนเชงคำนวการและคลาส-p-np-np-complete">15.2 ความซับซ้อนเชิงคำนวการและคลาส P, NP, NP-complete</h2>
+
+<pre><code class=" language-mermaid">graph TD
+    subgraph P[คลาส P - แก้ได้ในเวลาพหุนัย]
+    direction TB
+    P1[การเรียงลำดับ]
+    P2[การค้นหาแบบไบนารี]
+    P3[เส้นทางสั้นที่สุดไดจ์สตรา]
+    end
+    
+    subgraph NP[คลาส NP - ตรวจสอบคำตอบได้ในเวลาพหุนัย]
+    direction TB
+    NP1[ปัญหากระเป๋าเดินทาง]
+    NP2[ปัญหาเฉดสีแผนที่]
+    NP3[ปัญหาไคล์กสูงสุด]
+    end
+    
+    subgraph NPC[คลาส NP-complete - ยากที่สุดใน NP]
+    direction TB
+    NPC1[SAT]
+    NPC2[TSP]
+    NPC3[Knapsack]
+    end
+    
+    P --&gt; NP
+    NPC --&gt; NP
+    
+    style P fill:#C8E6C9
+    style NP fill:#FFF9C4
+    style NPC fill:#FFCDD2</code></pre>
+
+<h3 id="คลาส-p-polynomial-time">คลาส P (Polynomial time)</h3>
+<p>ปัญหาที่แก้ได้ในเวลาพหุนัย เช่น การเรียงลำดับ การค้นหา</p>
+
+<h3 id="คลาส-np-nondeterministic-polynomial-time">คลาส NP (Nondeterministic Polynomial time)</h3>
+<p>ปัญหาที่ถ้ามีคำตอบแล้วสามารถตรวจสอบว่าถูกต้องในเวลาพหุนัย</p>
+
+<h3 id="คลาส-np-complete">คลาส NP-complete</h3>
+<p>ปัญหาที่ยากที่สุดในคลาส NP ถ้าแก้ปัญหาใดปัญหาหนึ่งใน NP-complete ได้ในเวลาพหุนัย ปัญหาใน NP ทั้งหมดก็จะแก้ได้ในเวลาพหุนัยเช่นกัน</p>
+
+<p>ตัวอย่าง NP-complete: ปัญหากระเป๋าเดินทาง (TSP), ปัญหาเฉดสีแผนที่, ปัญหาความพอพอ (SAT)</p>
+
+<h3 id="คำถาม-p-vs-np">คำถาม P vs NP</h3>
+<p>ยังไม่มีผู้ใดพิสูจน์ว่า P = NP หรือ P ≠ NP เป็นหนึ่งในปัญหามิลเลนเนียมของสถาบันคณิตศาสตร์เคลย์</p>
+
+<hr>
+
+<h2 id="153-อลกอรทมประมาณผลและอลกอรทมสม">15.3 อัลกอริทึมประมาณผลและอัลกอริทึมสุ่ม</h2>
+
+<p>สำหรับปัญหาที่ยากเกินไป (NP-hard) อาจใช้การประมาณผลที่ให้คำตอบใกล้เคียงกับคำตอบที่ดีที่สุดภายในเวลาที่ยอมรับได้</p>
+
+<p>ตัวอย่าง: อัลกอริทึมประมาณผลสำหรับ TSP ให้เส้นทางที่ยาวไม่เกินสองเท่าของเส้นทางที่สั้นที่สุด</p>
+
+<hr>
+
+<h2 id="154-อลกอรทมสำหรบสายเครอขาย">15.4 อัลกอริทึมสำหรับสายเครือข่าย</h2>
+
+<h3 id="อลกอรทมฟลคลสน-เฟรกเกอรสน-ford-fulkerson">อัลกอริทึมฟูล์คูลสัน-เฟิร์กเกอร์สัน (Ford-Fulkerson)</h3>
+
+<p>หาปริมาณการไหลสูงสุด (Maximum Flow) ในเครือข่ายจากจุดต้นทางไปจุดปลายทาง</p>
+
+<hr>
+
+<h2 id="155-การสงเคราะหความรและการออกแบบระบบ">15.5 การสังเคราะห์ความรู้และการออกแบบระบบ</h2>
+
+<p>นักศึกษาควรสามารถเลือกใช้โครงสร้างข้อมูลและอัลกอริทึมที่เหมาะสมกับปัญหา เช่น:</p>
+
+<table>
+<tr><th>ปัญหา</th><th>โครงสร้างข้อมูลที่แนะนำ</th><th>อัลกอริทึมที่แนะนำ</th></tr>
+<tr><td>ค้นหาข้อมูลบ่อย</td><td>ตารางแฮช</td><td>ฟังก์ชันแฮช</td></tr>
+<tr><td>เรียงลำดับข้อมูล</td><td>อาเรย์</td><td>เมอร์จ์ซอร์ต ควิกซอร์ต</td></tr>
+<tr><td>หาเส้นทางสั้นที่สุด</td><td>กราฟ + คิว priority</td><td>ไดจ์สตรา</td></tr>
+<tr><td>บีบอัดข้อมูล</td><td>ต้นไม้ฮัฟฟ์แมน</td><td>ฮัฟฟ์แมนคoding</td></tr>
+<tr><td>จัดการงานตามลำดับความสำคัญ</td><td>ฮีป (Heap)</td><td>ฮีปซอร์ต</td></tr>
+</table>
+
+<hr>
+
+<h2 id="156-หวขอพเศษตามความสนใจของนกศกษา">15.6 หัวข้อพิเศษตามความสนใจของนักศึกษา</h2>
+
+<ul>
+<li>อัลกอริทึมบล็อกเชน</li>
+<li>อัลกอริทึมในปัญญาประดิษฐ์</li>
+<li>อัลกอริทึมการเข้ารหัสลับ</li>
+<li>อัลกอริทิธมสำหรับข้อมูลขนาดใหญ่ (Big Data)</li>
+</ul>
+
+<hr>
+
+<h2 id="แบบฝกหด">แบบฝึกหัด</h2>
+
+<h3 id="ขอท-1">ข้อที่ 1</h3>
+<p>จงเขียนอัลกอริทึมไดจ์สตราเพื่อหาเส้นทางที่สั้นที่สุดในกราฟที่กำหนด</p>
+
+<p><strong>คำตอบ:</strong> ดูโค้ดในหัวข้อ 15.1</p>
+
+<h3 id="ขอท-2">ข้อที่ 2</h3>
+<p>จงอธิบายความแตกต่างระหว่างคลาส P กับคลาส NP</p>
+
+<p><strong>คำตอบ:</strong></p>
+<ul>
+<li>คลาส P: ปัญหาที่แก้ได้ในเวลาพหุนัย</li>
+<li>คลาส NP: ปัญหาที่ตรวจสอบคำตอบได้ในเวลาพหุนัย (ถ้ามีคำตอบแล้ว)</li>
+</ul>
+
+<h3 id="ขอท-3">ข้อที่ 3</h3>
+<p>จงออกแบบระบบเบื้องต้นโดยเลือกใช้โครงสร้างข้อมูลและอัลกอริทึมที่เหมาะสม</p>
+
+<p><strong>คำตอบ:</strong> ตัวอย่าง เช่น ระบบเครือข่ายสังคมใช้กราฟในการแสดงความสัมพันธ์ ระบบค้นหาใช้ตารางแฮชในการจัดเก็บข้อมูลผู้ใช้</p>
+
+<hr>
+
+<h2 id="แบบปฏบตการขอสอบ">แบบปฏิบัติการข้อสอบ</h2>
+
+<h3 id="ขอควบคมเลอกตอบ-จำนวน-8-ขอ">ข้อควบคุมเลือกตอบ (จำนวน 8 ข้อ)</h3>
+
+<p><strong>ข้อ 1.</strong> อัลกอริทึมไดจ์สตราใช้สำหรับหาอะไร</p>
+<ul>
+<li>ก. ต้นไม้ครอบคลุมน้ำหนักน้อยที่สุด</li>
+<li>ข. เส้นทางที่สั้นที่สุดจากจุดหนึ่งไปทุกจุด</li>
+<li>ค. การเรียงลำดับข้อมูล</li>
+<li>ง. การบีบอัดข้อมูล</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 2.</strong> คลาส P หมายถึงปัญหาที่</p>
+<ul>
+<li>ก. ตรวจสอบคำตอบได้ในเวลาพหุนัย</li>
+<li>ข. แก้ได้ในเวลาพหุนัย</li>
+<li>ค. ไม่สามารถแก้ได้</li>
+<li>ง. แก้ได้ด้วยอัลกอริทึมสุ่มเท่านั้น</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 3.</strong> ปัญหาใดเป็นตัวอย่างของ NP-complete</p>
+<ul>
+<li>ก. การเรียงลำดับข้อมูล</li>
+<li>ข. ปัญหากระเป๋าเดินทาง (TSP)</li>
+<li>ค. การค้นหาแบบไบนารี</li>
+<li>ง. การหาค่ามากที่สุดในอาเรย์</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 4.</strong> อัลกอริทึมฟลอยด์-วอแชลล์หาอะไร</p>
+<ul>
+<li>ก. เส้นทางสั้นที่สุดจากจุดเดียว</li>
+<li>ข. เส้นทางสั้นที่สุดระหว่างทุกคู่จุด</li>
+<li>ค. ต้นไม้ครอบคลุมน้ำหนักน้อยที่สุด</li>
+<li>ง. การไหลสูงสุดในเครือข่าย</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 5.</strong> อัลกอริทึมประมาณผลใช้สำหรับอะไร</p>
+<ul>
+<li>ก. ปัญหาที่แก้ได้ง่าย</li>
+<li>ข. ปัญหาที่ยากเกินไป (NP-hard) ต้องการคำตอบใกล้เคียง</li>
+<li>ค. ปัญหาการเรียงลำดับ</li>
+<li>ง. ปัญหาการค้นหา</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 6.</strong> ความซับซ้อนของฟลอยด์-วอแชลล์คือ</p>
+<ul>
+<li>ก. O(V)</li>
+<li>ข. O(V²)</li>
+<li>ค. O(V³)</li>
+<li>ง. O(2ᵛ)</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<p><strong>ข้อ 7.</strong> อัลกอริทึมฟูล์คูลสัน-เฟิร์กเกอร์สันใช้สำหรับหาอะไร</p>
+<ul>
+<li>ก. เส้นทางที่สั้นที่สุด</li>
+<li>ข. การไหลสูงสุดในเครือข่าย</li>
+<li>ค. การบีบอัดข้อมูล</li>
+<li>ง. การเรียงลำดับ</li>
+</ul>
+
+<p><strong>ตอบ: ข</strong></p>
+
+<p><strong>ข้อ 8.</strong> คำถาม P vs NP ยังไม่มีคำตอบหรือไม่</p>
+<ul>
+<li>ก. มีคำตอบแล้วว่า P = NP</li>
+<li>ข. มีคำตอบแล้วว่า P ≠ NP</li>
+<li>ค. ยังไม่มีคำตอบ</li>
+<li>ง. ไม่เกี่ยวข้องกับวิทยาการคอมพิวเตอร์</li>
+</ul>
+
+<p><strong>ตอบ: ค</strong></p>
+
+<h3 id="ขอปฏบตการ-จำนวน-3-ขอ">ข้อปฏิบัติการ (จำนวน 3 ข้อ)</h3>
+
+<p><strong>ข้อ 9.</strong> จงเขียนโค้ดภาษา C หรือ Python ใช้ไดจ์สตราหาเส้นทางที่สั้นที่สุดในกราฟที่ป้อนจากผู้ใช้</p>
+
+<p><strong>ข้อ 10.</strong> จงออกแบบระบบฐานข้อมูลพนักงานโดยเลือกใช้โครงสร้างข้อมูลและอัลกอริทึมที่เหมาะสม อธิบายเหตุผลที่เลือก</p>
+
+<p><strong>ข้อ 11.</strong> จงเขียนโปรแกรมแก้ปัญหาขั้นสูงจากสถานการณ์ที่กำหนด เช่น ระบบเส้นทางรถไฟฟ้า ระบบเครือข่ายสังคม</p>
+
+<hr>
+
+<h2 id="ภาคผนก">ภาคผนก</h2>
+
+<h3 id="ภาคผนก-151-โคดตวอยางอลกอรทมขนสงทกตว">ภาคผนก 15.1 โค้ดตัวอย่างอัลกอริทึมขั้นสูงทุกตัว</h3>
+
+<p><strong>ภาษา C – ฟลอยด์-วอแชลล์:</strong></p>
+<pre><code class=" language-c">void floyd_warshall(int graph[V][V], int V) {
+    int dist[V][V];
+    
+    for (int i = 0; i &lt; V; i++)
+        for (int j = 0; j &lt; V; j++)
+            dist[i][j] = graph[i][j];
+    
+    for (int k = 0; k &lt; V; k++) {
+        for (int i = 0; i &lt; V; i++) {
+            for (int j = 0; j &lt; V; j++) {
+                if (dist[i][k] + dist[k][j] &lt; dist[i][j])
+                    dist[i][j] = dist[i][k] + dist[k][j];
+            }
+        }
+    }
+}</code></pre>
+
+<h3 id="ภาคผนก-152-แนวทางการทำโครงงานปลายทางและเกณฑการประเมน">ภาคผนก 15.2 แนวทางการทำโครงงานปลายทางและเกณฑ์การประเมิน</h3>
+
+<p><strong>ขั้นตอนการทำโครงงาน:</strong></p>
+<ol>
+<li>เลือกปัญหาที่สนใจจากชีวิตจริง</li>
+<li>วิเคราะห์และออกแบบโครงสร้างข้อมูลที่เหมาะสม</li>
+<li>เลือกอัลกอริทึมที่ใช้แก้ปัญหา</li>
+<li>เขียนโปรแกรมและทดสอบ</li>
+<li>นำเสนอผลงาน</li>
+</ol>
+
+<p><strong>เกณฑ์การประเมิน:</strong></p>
+<ul>
+<li>ความเหมาะสมของโครงสร้างข้อมูลและอัลกอริทึม (40%)</li>
+<li>ความถูกต้องของโปรแกรม (30%)</li>
+<li>การนำเสนอและเอกสารประกอบ (20%)</li>
+<li>ความคิดสร้างสรรค์ (10%)</li>
+</ul>
+
+<hr>
+
+<h2 id="อางอง">อ้างอิง</h2>
+
+<ul>
+<li>เอกสารประกอบการสอน บทที่ 15 อัลกอริทึมขั้นสูงและหัวข้อพิเศษ</li>
+<li>Cormen, T. H., et al. <em>Introduction to Algorithms</em>. Chapters on Advanced Algorithms, MIT Press.</li>
+</ul>
+
+        <div class="chapter-nav">
+          <a href="chapter-14.html" class="nav-btn"><span class="sr-only">ย้อนกลับ</span>← บทก่อนหน้า: 14 อัลกอริทึมสตริง (String Algorithm)</a>
+          
+        </div>
+      </article>
+    </main>
+  </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-text">&copy; 2026 MaeeYeng — โครงสร้างข้อมูลและอัลกอริทึม. สงวนลิขสิทธิ์ทุกประการ.</p>
+      <ul class="footer-links">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="appendices.html">ภาคผนก</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('nav-menu');
+      const btn = document.querySelector('.mobile-menu-btn');
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    }
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('nav-menu').classList.remove('open');
+        document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>
