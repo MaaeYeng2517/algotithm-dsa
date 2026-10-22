@@ -1,0 +1,11 @@
+{
+  "version": 3,
+  "framework": "next.js",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "regions": ["hnd1"],
+  "env": {
+    "NEXT_PUBLIC_SITE_URL": "https://dsa-course-2030.vercel.app"
+  }
+}
