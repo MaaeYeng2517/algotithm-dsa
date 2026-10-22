@@ -81,6 +81,31 @@ export function ChapterLayout({ children, chapterId, content, readmeUrl }) {
 
           <MarkdownContent content={content} />
 
+          {chapter?.related && chapter.related.length > 0 && (
+            <section className="related-chapters">
+              <h3 className="related-title">เนื้อหาที่เกี่ยวข้อง</h3>
+              <p className="related-desc">แนะนำให้อ่านบทเหล่านี้เพื่อความเข้าใจที่ลึกซึ้งยิ่งขึ้น</p>
+              <div className="related-grid">
+                {chapter.related.map((rid) => {
+                  const rch = CHAPTERS.find(ch => ch.id === rid);
+                  if (!rch) return null;
+                  const short = rch.title.split(' ').slice(1).join(' ');
+                  return (
+                    <Link
+                      key={rid}
+                      href={`/chapter/${rid}`}
+                      className="related-card"
+                      onClick={() => {}}
+                    >
+                      <span className="related-number">{rch.order}</span>
+                      <span className="related-title-text">{short}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
           <nav className="chapter-nav">
             {prev && (
               <Link href={`/chapter/${prev.id}`} className="nav-btn nav-btn-prev">

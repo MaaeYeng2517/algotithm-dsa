@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { href: '/', label: 'หน้าแรก' },
   ...CHAPTERS.map(ch => ({ href: `/chapter/${ch.id}`, label: ch.title.split(' ').slice(1).join(' ') })),
   { href: '/appendices', label: 'ภาคผนก' },
+  { href: '/presentation', label: 'นำเสนอ' },
 ];
 
 export default function Nav() {
