@@ -4,15 +4,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { CHAPTERS } from '../lib/chapters-meta';
 
-const NAV_ITEMS = [
-  { href: '/', label: 'หน้าแรก' },
-  ...CHAPTERS.map(ch => ({ href: `/chapter/${ch.id}`, label: ch.title.split(' ').slice(1).join(' ') })),
-  { href: '/appendices', label: 'ภาคผนก' },
-  { href: '/presentation', label: 'นำเสนอ' },
-];
-
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [chaptersOpen, setChaptersOpen] = useState(false);
 
   const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
 
@@ -36,19 +30,56 @@ export default function Nav() {
         </button>
 
         <div className={`nav-menu ${isOpen ? 'open' : ''}`}>
-          {NAV_ITEMS.map((item, index) => {
-            const isActive = currentPath === item.href;
-            return (
-              <Link
-                key={index}
-                href={item.href}
-                className={`nav-link ${isActive ? 'active' : ''}`}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+          <Link
+            href="/"
+            className={`nav-link ${currentPath === '/' ? 'active' : ''}`}
+            onClick={() => setIsOpen(false)}
+          >
+            หน้าแรก
+          </Link>
+
+          <div
+            className="nav-dropdown"
+            onMouseEnter={() => setChaptersOpen(true)}
+            onMouseLeave={() => setChaptersOpen(false)}
+          >
+            <button
+              className={`nav-link nav-dropdown-toggle ${currentPath.startsWith('/chapter') ? 'active' : ''}`}
+              onClick={() => setChaptersOpen(!chaptersOpen)}
+            >
+              บทเรียน ▾
+            </button>
+            {chaptersOpen && (
+              <div className="nav-dropdown-menu">
+                {CHAPTERS.map((ch) => (
+                  <Link
+                    key={ch.id}
+                    href={`/chapter/${ch.id}`}
+                    className={`nav-dropdown-item ${currentPath === `/chapter/${ch.id}` ? 'active' : ''}`}
+                    onClick={() => { setIsOpen(false); setChaptersOpen(false); }}
+                  >
+                    {ch.title}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Link
+            href="/appendices"
+            className={`nav-link ${currentPath === '/appendices' ? 'active' : ''}`}
+            onClick={() => setIsOpen(false)}
+          >
+            ภาคผนวก
+          </Link>
+
+          <Link
+            href="/presentation"
+            className={`nav-link ${currentPath.startsWith('/presentation') ? 'active' : ''}`}
+            onClick={() => setIsOpen(false)}
+          >
+            นำเสนอ
+          </Link>
         </div>
       </div>
     </nav>

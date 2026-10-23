@@ -142,9 +142,53 @@ body {
   background: #eff6ff;
 }
 
-.nav-link.active {
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  min-width: 280px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 200;
+  padding: 0.5rem 0;
+}
+
+.nav-dropdown-item {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.nav-dropdown-item:hover,
+.nav-dropdown-item:focus {
+  color: var(--primary);
+  background: #eff6ff;
+}
+
+.nav-dropdown-item.active {
   color: var(--primary);
   background: #dbeafe;
+  font-weight: 600;
 }
 
 /* Main content */
