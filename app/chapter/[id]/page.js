@@ -12,7 +12,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const chapter = getChapterById(params.id);
+  const resolvedParams = await params;
+  const chapter = getChapterById(resolvedParams.id);
   return {
     title: chapter ? chapter.title : 'บทเรียน',
     description: 'เนื้อหาบทเรียนโครงสร้างข้อมูลและอัลกอริทึม',
@@ -20,9 +21,11 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ChapterPage({ params }) {
-  const chapter = getChapterById(params.id);
-  const { prev, next } = getPrevNext(params.id);
-  const data = await readChapterMarkdown(params.id);
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
+  const chapter = getChapterById(id);
+  const { prev, next } = getPrevNext(id);
+  const data = await readChapterMarkdown(id);
 
   if (!data) {
     return (
@@ -34,7 +37,7 @@ export default async function ChapterPage({ params }) {
   }
 
   return (
-    <ChapterLayout chapterId={params.id} content={data.content} readmeUrl={`https://github.com/MaaeYeng2517/algotithm-dsa/blob/main/content/${params.id}.md`}>
+    <ChapterLayout chapterId={id} content={data.content} readmeUrl={`https://github.com/MaaeYeng2517/algotithm-dsa/blob/main/content/${id}.md`}>
       {null}
     </ChapterLayout>
   );
