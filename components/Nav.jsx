@@ -15,7 +15,7 @@ export default function Nav() {
       <div className="navbar-container">
         <Link href="/" className="navbar-brand">
           <span className="brand-icon">DSA</span>
-          <span className="brand-name">DSA Course</span>
+          <span className="brand-name">บทเรียนสำเร็จรูป</span>
         </Link>
 
         <button
